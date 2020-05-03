@@ -46,9 +46,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /.vs
-/Bank/.vs
-/Bank/obj
-/BankSetup/obj
-/BankSetup/.vs
-/bin/Debug
-/bin/Release
+/Backup/.vs
+/Backup/obj
+/Backup/bin
+/Backup/Release

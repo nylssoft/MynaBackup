@@ -375,7 +375,7 @@ namespace Backup
         {
             MessageBox.Show(
                 this,
-                string.Format("Ein Fehler ist aufgetreten: %1", ex.Message),
+                string.Format("Ein Fehler ist aufgetreten: {0}", ex.Message),
                 Title,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
@@ -679,6 +679,7 @@ namespace Backup
                 if (wnd.ShowDialog() == true)
                 {
                     BackupManager.Add(new BackupModel { Title = wnd.CollectionName });
+                    nextBackupMapping[wnd.CollectionName] = null;
                     comboBox.Items.Add(wnd.CollectionName);
                     comboBox.SelectedItem = wnd.CollectionName;                    
                 }
@@ -735,6 +736,7 @@ namespace Backup
                     {
                         comboBox.SelectedIndex = Math.Min(idx, comboBox.Items.Count - 1);
                     }
+                    nextBackupMapping.Remove(name);
                 }
                 catch (Exception ex)
                 {
