@@ -1,0 +1,294 @@
+﻿<Window x:Class="Backup.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Backup"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded" Closing="Window_Closing"
+        Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+        Title="Myna Backup"
+        Icon="Images/logo.png"
+        Height="600" Width="1024" MinWidth="200" MinHeight="300">
+    <Window.Resources>
+        <local:TimeValueConverter x:Key="TimeValueConverter" />
+        <Style x:Key="ImageEnabled" TargetType="Image">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.25"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.CreateBackupCollection" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.RenameBackupCollection" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.DeleteBackupCollection" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.AddSourceDirectory" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.AddSourceFile" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.RemoveSourceFile" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.AddDestinationDirectory" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.RemoveDestinationDirectory" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.Backup" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.Refresh" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.Exit" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.About" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+    </Window.CommandBindings>
+    <Grid Margin="5,5,5,5">
+        <DockPanel LastChildFill="True">
+            <Grid DockPanel.Dock="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Menu Grid.Row="0" KeyboardNavigation.TabIndex="1">
+                    <MenuItem Header="_Datei">
+                        <MenuItem Command="local:CustomCommands.CreateBackupCollection">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/document-new-6.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="local:CustomCommands.RenameBackupCollection" />
+                        <MenuItem Command="local:CustomCommands.DeleteBackupCollection" />
+                        <Separator />
+                        <MenuItem Command="local:CustomCommands.Exit">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/application-exit-5.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="_Bearbeiten">
+                        <MenuItem Command="local:CustomCommands.AddSourceFile">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/list-add-4.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="local:CustomCommands.AddSourceDirectory">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/folder-new-2.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="local:CustomCommands.RemoveSourceFile">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/list-remove-4.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Command="local:CustomCommands.AddDestinationDirectory">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/network-connect-2.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="local:CustomCommands.RemoveDestinationDirectory">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/network-disconnect-2.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Command="local:CustomCommands.Backup">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/media-optical-copy-2.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="_Ansicht">
+                        <MenuItem Command="local:CustomCommands.Refresh"/>
+                    </MenuItem>
+                    <MenuItem Header="_Hilfe">
+                        <MenuItem Command="local:CustomCommands.About">
+                            <MenuItem.Icon>
+                                <Image Source="Images/16x16/document-properties.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+                <ToolBarTray Grid.Row="1">
+                    <ToolBar KeyboardNavigation.TabNavigation="Continue">
+                        <Label Margin="0,5,0,5" Content="Sicherung:" Target="{Binding ElementName=comboBox}"/>
+                        <ComboBox x:Name="comboBox" MinWidth="100" Margin="0,3,0,3" HorizontalAlignment="Left" SelectionChanged="ComboBoxBackupCollection_SelectionChanged" KeyboardNavigation.TabIndex="2"/>
+                    </ToolBar>
+                    <ToolBar KeyboardNavigation.TabNavigation="Continue">
+                        <Button ToolTip="Add Source File" Command="local:CustomCommands.AddSourceFile" KeyboardNavigation.TabIndex="3">
+                            <Image Source="Images/32x32/list-add-4.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
+                        </Button>
+                        <Button ToolTip="Add Source Directory" Command="local:CustomCommands.AddSourceDirectory" KeyboardNavigation.TabIndex="4">
+                            <Image Source="Images/32x32/folder-new-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
+                        </Button>
+                        <Button ToolTip="Remove Source File" Command="local:CustomCommands.RemoveSourceFile" KeyboardNavigation.TabIndex="5">
+                            <Image Source="Images/32x32/list-remove-4.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
+                        </Button>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                        <Button ToolTip="Add Destination Directory" Command="local:CustomCommands.AddDestinationDirectory" KeyboardNavigation.TabIndex="6">
+                            <Image Source="Images/32x32/network-connect-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
+                        </Button>
+                        <Button ToolTip="Remove Destination Directory" Command="local:CustomCommands.RemoveDestinationDirectory" KeyboardNavigation.TabIndex="7">
+                            <Image Source="Images/32x32/network-disconnect-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
+                        </Button>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                        <Button ToolTip="Start Backup" Command="local:CustomCommands.Backup" KeyboardNavigation.TabIndex="5">
+                            <Image Source="Images/32x32/media-optical-copy-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
+                        </Button>
+                    </ToolBar>
+                </ToolBarTray>
+            </Grid>
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Letzte Sicherung:" />
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Gestarted am:" />
+                    <Label x:Name="labelBackupStarted" Grid.Column="1" />
+                    <Label Grid.Column="2" Content="Beendet am:" />
+                    <Label x:Name="labelBackupFinished" Grid.Column="3" />
+                    <Label Grid.Column="4" Content="Nächste Sicherung am:" />
+                    <Label x:Name="labelBackupNextStart" Grid.Column="5" />
+                </Grid>
+                <Label Grid.Row="1" Grid.Column="0" Content="Automatische Sicherung:" />
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <RadioButton x:Name="radioButtonNever" Content="Niemals" Margin="0,0,5,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
+                    <RadioButton x:Name="radioButtonHour" Content="Stündlich" Margin="5,0,5,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
+                    <RadioButton x:Name="radioButtonDay" Content="Täglich" Margin="5,0,0,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
+                </StackPanel>
+                <Label Grid.Row="2" Grid.Column="0" Content="Inkludierungs-Muster:" />
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="textBoxIncludePattern" Height="23" TextChanged="TextBoxIncludePattern_TextChanged" />
+                    <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyIncludePattern" Height="23" Content="Anwenden" Click="ButtonApplyIncludePattern_Click" />
+                </Grid>
+                <Label Grid.Row="3" Grid.Column="0" Content="Exkludierungs-Muster:" />
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="textBoxExcludePattern" Height="23" TextChanged="TextBoxExcludePattern_TextChanged" />
+                    <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyExcludePattern" Height="23" Content="Anwenden" Click="ButtonApplyExcludePattern_Click" />
+                </Grid>
+                <Label Grid.Row="4" Grid.Column="0" Content="Quelldateien:"/>
+                <ListView Grid.Row="4" Grid.Column="1" x:Name="listViewSourceFiles" SelectionChanged="ListView_SelectionChanged" VirtualizingPanel.IsVirtualizing="False">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="400" DisplayMemberBinding="{Binding Name}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Name" Click="ListViewSourceFiles_ColumnHeaderClick" Content="Dateipfad"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Width="100" DisplayMemberBinding="{Binding Size}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Size" Click="ListViewSourceFiles_ColumnHeaderClick" Content="Dateigröße"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Width="150">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader x:Name="gridViewColumModifiedDate" Tag="ModifiedDate" Click="ListViewSourceFiles_ColumnHeaderClick" Content="Zuletzt geändert" />
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ModifiedDate, Converter={StaticResource TimeValueConverter}}" TextAlignment="Left" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="local:CustomCommands.RemoveSourceFile">
+                                <MenuItem.Icon>
+                                    <Image Source="Images/16x16/list-remove-4.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+                <Label Grid.Row="5" Grid.Column="1" x:Name="labelSourceFilesInfo" />
+                <Label Grid.Row="6" Grid.Column="0" Content="Zielverzeichnisse:"/>
+                <ListView Grid.Row="6" Grid.Column="1" x:Name="listViewDirectories" SelectionChanged="ListView_SelectionChanged" VirtualizingPanel.IsVirtualizing="False">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="250" DisplayMemberBinding="{Binding Name}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Name" Content="Verzeichnispfad" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Width="130">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Started" Content="Sicherung gestartet" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Started, Converter={StaticResource TimeValueConverter}}" TextAlignment="Left" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="130">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Finished" Content="Sicherung beendet" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Finished, Converter={StaticResource TimeValueConverter}}" TextAlignment="Left" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="100" DisplayMemberBinding="{Binding Copied}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Copied" Content="Kopierte Dateien" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Width="100" DisplayMemberBinding="{Binding Failed}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Failed" Content="Kopierfehler" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="local:CustomCommands.RemoveDestinationDirectory">
+                                <MenuItem.Icon>
+                                    <Image Source="Images/16x16/network-disconnect-2.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+                <Label Grid.Row="7" Grid.Column="1" x:Name="labelDirectoriesInfo" />
+                <Label Grid.Row="8" Grid.Column="1" x:Name="labelProgress" />
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

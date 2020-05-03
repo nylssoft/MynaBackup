@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Authors>Niels Stockfleth</Authors>
+    <Company>NylsSoft</Company>
+    <Product>Myna Backup</Product>
+    <Copyright>2020 Niels Stockfleth</Copyright>
+    <ApplicationIcon>Images\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\128x128\adium.png" />
+    <None Remove="Images\16x16\application-exit-5.png" />
+    <None Remove="Images\16x16\document-new-6.png" />
+    <None Remove="Images\16x16\document-properties.png" />
+    <None Remove="Images\16x16\folder-new-2.png" />
+    <None Remove="Images\16x16\list-add-4.png" />
+    <None Remove="Images\16x16\list-remove-4.png" />
+    <None Remove="Images\16x16\media-optical-copy-2.png" />
+    <None Remove="Images\16x16\network-connect-2.png" />
+    <None Remove="Images\16x16\network-disconnect-2.png" />
+    <None Remove="Images\32x32\folder-new-2.png" />
+    <None Remove="Images\32x32\list-add-4.png" />
+    <None Remove="Images\32x32\list-remove-4.png" />
+    <None Remove="Images\32x32\media-optical-copy-2.png" />
+    <None Remove="Images\32x32\network-connect-2.png" />
+    <None Remove="Images\32x32\network-disconnect-2.png" />
+    <None Remove="Images\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\128x128\adium.png" />
+    <Resource Include="Images\16x16\application-exit-5.png" />
+    <Resource Include="Images\16x16\document-new-6.png" />
+    <Resource Include="Images\16x16\document-properties.png" />
+    <Resource Include="Images\16x16\folder-new-2.png" />
+    <Resource Include="Images\16x16\list-add-4.png" />
+    <Resource Include="Images\16x16\list-remove-4.png" />
+    <Resource Include="Images\16x16\media-optical-copy-2.png" />
+    <Resource Include="Images\16x16\network-connect-2.png" />
+    <Resource Include="Images\16x16\network-disconnect-2.png" />
+    <Resource Include="Images\32x32\folder-new-2.png" />
+    <Resource Include="Images\32x32\list-add-4.png" />
+    <Resource Include="Images\32x32\list-remove-4.png" />
+    <Resource Include="Images\32x32\media-optical-copy-2.png" />
+    <Resource Include="Images\32x32\network-connect-2.png" />
+    <Resource Include="Images\32x32\network-disconnect-2.png" />
+    <Resource Include="Images\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
