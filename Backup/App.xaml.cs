@@ -15,6 +15,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System.Globalization;
+using System.Threading;
 using System.Windows;
 
 namespace Backup
@@ -24,5 +26,19 @@ namespace Backup
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            string language = Backup.Properties.Settings.Default.Language;
+            if (!string.IsNullOrEmpty(language))
+            {
+                CultureInfo ci = CultureInfo.GetCultureInfo(language);
+                Thread.CurrentThread.CurrentCulture = ci;
+                Thread.CurrentThread.CurrentUICulture = ci;
+                FrameworkElement.LanguageProperty.OverrideMetadata(
+                    typeof(FrameworkElement),
+                    new FrameworkPropertyMetadata(
+                    System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
+            }
+        }
     }
 }

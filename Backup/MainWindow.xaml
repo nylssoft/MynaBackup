@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Backup"
+        xmlns:props="clr-namespace:Backup.Properties"
         mc:Ignorable="d"
         Loaded="Window_Loaded" Closing="Window_Closing"
         Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
@@ -41,8 +42,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Menu Grid.Row="0" KeyboardNavigation.TabIndex="1">
-                    <MenuItem Header="_Datei">
+                <Menu Grid.Row="0">
+                    <MenuItem Header="{x:Static props:Resources.MENUITEM_FILE}">
                         <MenuItem Command="local:CustomCommands.CreateBackupCollection">
                             <MenuItem.Icon>
                                 <Image Source="Images/16x16/document-new-6.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
@@ -57,7 +58,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="_Bearbeiten">
+                    <MenuItem Header="{x:Static props:Resources.MENUITEM_EDIT}">
                         <MenuItem Command="local:CustomCommands.AddSourceFile">
                             <MenuItem.Icon>
                                 <Image Source="Images/16x16/list-add-4.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
@@ -91,10 +92,10 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="_Ansicht">
+                    <MenuItem Header="{x:Static props:Resources.MENUITEM_VIEW}">
                         <MenuItem Command="local:CustomCommands.Refresh"/>
                     </MenuItem>
-                    <MenuItem Header="_Hilfe">
+                    <MenuItem Header="{x:Static props:Resources.MENUITEM_HELP}">
                         <MenuItem Command="local:CustomCommands.About">
                             <MenuItem.Icon>
                                 <Image Source="Images/16x16/document-properties.png" Style="{StaticResource ImageEnabled}" Width="16" Height="16"/>
@@ -103,29 +104,29 @@
                     </MenuItem>
                 </Menu>
                 <ToolBarTray Grid.Row="1">
-                    <ToolBar KeyboardNavigation.TabNavigation="Continue">
-                        <Label Margin="0,5,0,5" Content="Sicherung:" Target="{Binding ElementName=comboBox}"/>
-                        <ComboBox x:Name="comboBox" MinWidth="100" Margin="0,3,0,3" HorizontalAlignment="Left" SelectionChanged="ComboBoxBackupCollection_SelectionChanged" KeyboardNavigation.TabIndex="2"/>
+                    <ToolBar>
+                        <Label Margin="0,5,0,5" Content="{x:Static props:Resources.LABEL_BACKUP_COLLECTION}" Target="{Binding ElementName=comboBox}"/>
+                        <ComboBox x:Name="comboBox" MinWidth="100" Margin="0,3,0,3" HorizontalAlignment="Left" SelectionChanged="ComboBoxBackupCollection_SelectionChanged"/>
                     </ToolBar>
-                    <ToolBar KeyboardNavigation.TabNavigation="Continue">
-                        <Button ToolTip="Add Source File" Command="local:CustomCommands.AddSourceFile" KeyboardNavigation.TabIndex="3">
+                    <ToolBar>
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_SOURCE_FILE}" Command="local:CustomCommands.AddSourceFile">
                             <Image Source="Images/32x32/list-add-4.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
-                        <Button ToolTip="Add Source Directory" Command="local:CustomCommands.AddSourceDirectory" KeyboardNavigation.TabIndex="4">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_SOURCE_DIRECTORY}" Command="local:CustomCommands.AddSourceDirectory">
                             <Image Source="Images/32x32/folder-new-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
-                        <Button ToolTip="Remove Source File" Command="local:CustomCommands.RemoveSourceFile" KeyboardNavigation.TabIndex="5">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_REMOVE_SOURCE_FILE}" Command="local:CustomCommands.RemoveSourceFile">
                             <Image Source="Images/32x32/list-remove-4.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                        <Button ToolTip="Add Destination Directory" Command="local:CustomCommands.AddDestinationDirectory" KeyboardNavigation.TabIndex="6">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_DESTINATION_DIRECTORY}" Command="local:CustomCommands.AddDestinationDirectory">
                             <Image Source="Images/32x32/network-connect-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
-                        <Button ToolTip="Remove Destination Directory" Command="local:CustomCommands.RemoveDestinationDirectory" KeyboardNavigation.TabIndex="7">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_REMOVE_DESTINATION_DIRECTORY}" Command="local:CustomCommands.RemoveDestinationDirectory">
                             <Image Source="Images/32x32/network-disconnect-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                        <Button ToolTip="Start Backup" Command="local:CustomCommands.Backup" KeyboardNavigation.TabIndex="5">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_BACKUP}" Command="local:CustomCommands.Backup">
                             <Image Source="Images/32x32/media-optical-copy-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
                     </ToolBar>
@@ -147,7 +148,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Letzte Sicherung:" />
+                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static props:Resources.LABEL_LAST_BACKUP}" />
                 <Grid Grid.Row="0" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -157,38 +158,38 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Gestarted am:" />
+                    <Label Grid.Column="0" Content="{x:Static props:Resources.LABEL_STARTED_AT}" />
                     <Label x:Name="labelBackupStarted" Grid.Column="1" />
-                    <Label Grid.Column="2" Content="Beendet am:" />
+                    <Label Grid.Column="2" Content="{x:Static props:Resources.LABEL_FINISHED_AT}" />
                     <Label x:Name="labelBackupFinished" Grid.Column="3" />
-                    <Label Grid.Column="4" Content="Nächste Sicherung am:" />
+                    <Label Grid.Column="4" Content="{x:Static props:Resources.LABEL_NEXT_BACKUP_AT}" />
                     <Label x:Name="labelBackupNextStart" Grid.Column="5" />
                 </Grid>
-                <Label Grid.Row="1" Grid.Column="0" Content="Automatische Sicherung:" />
+                <Label Grid.Row="1" Grid.Column="0" Content="{x:Static props:Resources.LABEL_AUTOMATIC_BACKUP}" />
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                    <RadioButton x:Name="radioButtonNever" Content="Niemals" Margin="0,0,5,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
-                    <RadioButton x:Name="radioButtonHour" Content="Stündlich" Margin="5,0,5,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
-                    <RadioButton x:Name="radioButtonDay" Content="Täglich" Margin="5,0,0,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
+                    <RadioButton x:Name="radioButtonNever" Content="{x:Static props:Resources.OPTION_NEVER}" Margin="0,0,5,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
+                    <RadioButton x:Name="radioButtonHour" Content="{x:Static props:Resources.OPTION_HOURLY}" Margin="5,0,5,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
+                    <RadioButton x:Name="radioButtonDay" Content="{x:Static props:Resources.OPTION_DAILY}" Margin="5,0,0,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
                 </StackPanel>
-                <Label Grid.Row="2" Grid.Column="0" Content="Inkludierungs-Muster:" />
+                <Label Grid.Row="2" Grid.Column="0" Content="{x:Static props:Resources.LABEL_INCLUDE_PATTERN}" Target="{Binding ElementName=textBoxIncludePattern}"/>
                 <Grid Grid.Row="2" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="100" />
                     </Grid.ColumnDefinitions>
                     <TextBox Grid.Column="0" x:Name="textBoxIncludePattern" Height="23" TextChanged="TextBoxIncludePattern_TextChanged" />
-                    <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyIncludePattern" Height="23" Content="Anwenden" Click="ButtonApplyIncludePattern_Click" />
+                    <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyIncludePattern" Height="23" Content="{x:Static props:Resources.BUTTON_APPLY_INCLUDEPATTERN}" Click="ButtonApplyIncludePattern_Click" />
                 </Grid>
-                <Label Grid.Row="3" Grid.Column="0" Content="Exkludierungs-Muster:" />
+                <Label Grid.Row="3" Grid.Column="0" Content="{x:Static props:Resources.LABEL_EXCLUDE_PATTERN}" Target="{Binding ElementName=textBoxExcludePattern}"/>
                 <Grid Grid.Row="3" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="100" />
                     </Grid.ColumnDefinitions>
                     <TextBox Grid.Column="0" x:Name="textBoxExcludePattern" Height="23" TextChanged="TextBoxExcludePattern_TextChanged" />
-                    <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyExcludePattern" Height="23" Content="Anwenden" Click="ButtonApplyExcludePattern_Click" />
+                    <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyExcludePattern" Height="23" Content="{x:Static props:Resources.BUTTON_APPLY_EXCLUDEPATTERN}" Click="ButtonApplyExcludePattern_Click" />
                 </Grid>
-                <Label Grid.Row="4" Grid.Column="0" Content="Quelldateien:"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="{x:Static props:Resources.LABEL_SOURCE_FILES}" Target="{Binding ElementName=listViewSourceFiles}"/>
                 <ListView Grid.Row="4" Grid.Column="1" x:Name="listViewSourceFiles" SelectionChanged="ListView_SelectionChanged" VirtualizingPanel.IsVirtualizing="False">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -199,17 +200,17 @@
                         <GridView>
                             <GridViewColumn Width="400" DisplayMemberBinding="{Binding Name}">
                                 <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Name" Click="ListViewSourceFiles_ColumnHeaderClick" Content="Dateipfad"/>
+                                    <GridViewColumnHeader Tag="Name" Content="{x:Static props:Resources.COLUMN_FILEPATH}" Click="ListViewSourceFiles_ColumnHeaderClick" />
                                 </GridViewColumn.Header>
                             </GridViewColumn>
                             <GridViewColumn Width="100" DisplayMemberBinding="{Binding Size}">
                                 <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Size" Click="ListViewSourceFiles_ColumnHeaderClick" Content="Dateigröße"/>
+                                    <GridViewColumnHeader Tag="Size" Content="{x:Static props:Resources.COLUMN_FILESIZE}" Click="ListViewSourceFiles_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
                             </GridViewColumn>
                             <GridViewColumn Width="150">
                                 <GridViewColumn.Header>
-                                    <GridViewColumnHeader x:Name="gridViewColumModifiedDate" Tag="ModifiedDate" Click="ListViewSourceFiles_ColumnHeaderClick" Content="Zuletzt geändert" />
+                                    <GridViewColumnHeader x:Name="gridViewColumModifiedDate" Tag="ModifiedDate" Content="{x:Static props:Resources.COLUMN_LAST_MODIFIED}" Click="ListViewSourceFiles_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -230,7 +231,7 @@
                     </ListView.ContextMenu>
                 </ListView>
                 <Label Grid.Row="5" Grid.Column="1" x:Name="labelSourceFilesInfo" />
-                <Label Grid.Row="6" Grid.Column="0" Content="Zielverzeichnisse:"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="{x:Static props:Resources.LABEL_DESTINATION_DIRECTORIES}" Target="{Binding ElementName=listViewDirectories}"/>
                 <ListView Grid.Row="6" Grid.Column="1" x:Name="listViewDirectories" SelectionChanged="ListView_SelectionChanged" VirtualizingPanel.IsVirtualizing="False">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -241,12 +242,12 @@
                         <GridView>
                             <GridViewColumn Width="250" DisplayMemberBinding="{Binding Name}">
                                 <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Name" Content="Verzeichnispfad" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                    <GridViewColumnHeader Tag="Name" Content="{x:Static props:Resources.COLUMN_DIRECTORY_PATH}" Click="ListViewDirectories_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
                             </GridViewColumn>
                             <GridViewColumn Width="130">
                                 <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Started" Content="Sicherung gestartet" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                    <GridViewColumnHeader Tag="Started" Content="{x:Static props:Resources.COLUMN_BACKUP_STARTED}" Click="ListViewDirectories_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -256,7 +257,7 @@
                             </GridViewColumn>
                             <GridViewColumn Width="130">
                                 <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Finished" Content="Sicherung beendet" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                    <GridViewColumnHeader Tag="Finished" Content="{x:Static props:Resources.COLUMN_BACKUP_FINISHED}" Click="ListViewDirectories_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -266,12 +267,12 @@
                             </GridViewColumn>
                             <GridViewColumn Width="100" DisplayMemberBinding="{Binding Copied}">
                                 <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Copied" Content="Kopierte Dateien" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                    <GridViewColumnHeader Tag="Copied" Content="{x:Static props:Resources.COLUMN_COPIED_FILES}" Click="ListViewDirectories_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
                             </GridViewColumn>
                             <GridViewColumn Width="100" DisplayMemberBinding="{Binding Failed}">
                                 <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Failed" Content="Kopierfehler" Click="ListViewDirectories_ColumnHeaderClick"/>
+                                    <GridViewColumnHeader Tag="Failed" Content="{x:Static props:Resources.COLUMN_COPY_ERRORS}" Click="ListViewDirectories_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
                             </GridViewColumn>
                         </GridView>

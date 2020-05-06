@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Backup"
+        xmlns:props="clr-namespace:Backup.Properties"
         mc:Ignorable="d"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
         Height="150" Width="300" ResizeMode="NoResize">
@@ -17,11 +17,11 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="Name:" Target="{Binding ElementName=textBoxName}"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="{x:Static props:Resources.LABEL_NAME}" Target="{Binding ElementName=textBoxName}"/>
         <TextBox x:Name="textBoxName" Grid.Row="0" Grid.Column="1" MaxLength="100" Height="23" TextChanged="TextBox_Changed" Margin="0,0,5,0"/>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="buttonOK" IsDefault="True" Content="OK" Height="23" Width="80" Margin="5,0,5,0" Click="ButtonOK_Click"/>
-            <Button x:Name="buttonCancel" IsCancel="True" Content="Abbrechen" Height="23" Width="80" Margin="5,0,5,0" />
+            <Button x:Name="buttonOK" IsDefault="True" Content="{x:Static props:Resources.BUTTON_OK}" Height="23" Width="80" Margin="5,0,5,0" Click="ButtonOK_Click"/>
+            <Button x:Name="buttonCancel" IsCancel="True" Content="{x:Static props:Resources.BUTTON_CANCEL}" Height="23" Width="80" Margin="5,0,5,0" />
         </StackPanel>
     </Grid>
 </Window>

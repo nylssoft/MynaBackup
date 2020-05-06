@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BUTTON_APPLY_EXCLUDEPATTERN" xml:space="preserve">
+    <value>An_wenden</value>
+  </data>
+  <data name="BUTTON_APPLY_INCLUDEPATTERN" xml:space="preserve">
+    <value>A_nwenden</value>
+  </data>
+  <data name="BUTTON_CANCEL" xml:space="preserve">
+    <value>_Abbrechen</value>
+  </data>
+  <data name="BUTTON_OK" xml:space="preserve">
+    <value>_OK</value>
+  </data>
+  <data name="CMD_ABOUT" xml:space="preserve">
+    <value>_Über</value>
+  </data>
+  <data name="CMD_ADD_DESTINATION_DIRECTORY" xml:space="preserve">
+    <value>_Zielverzeichnis hinzufügen...</value>
+  </data>
+  <data name="CMD_ADD_SOURCE_DIRECTORY" xml:space="preserve">
+    <value>_Quellverzeichnis hinzufügen...</value>
+  </data>
+  <data name="CMD_ADD_SOURCE_FILE" xml:space="preserve">
+    <value>Que_lldatei hinzufügen...</value>
+  </data>
+  <data name="CMD_BACKUP" xml:space="preserve">
+    <value>_Sicherung starten</value>
+  </data>
+  <data name="CMD_CLOSE" xml:space="preserve">
+    <value>_Schliessen</value>
+  </data>
+  <data name="CMD_CREATE_BACKUP_COLLECTION" xml:space="preserve">
+    <value>_Neue Sicherung erstellen...</value>
+  </data>
+  <data name="CMD_DELETE_BACKUP_COLLECTION" xml:space="preserve">
+    <value>_Sicherung löschen...</value>
+  </data>
+  <data name="CMD_EXIT" xml:space="preserve">
+    <value>_Beenden</value>
+  </data>
+  <data name="CMD_REFRESH" xml:space="preserve">
+    <value>_Aktualisieren</value>
+  </data>
+  <data name="CMD_REMOVE_DESTINATION_DIRECTORY" xml:space="preserve">
+    <value>Z_ielverzeichnis entfernen</value>
+  </data>
+  <data name="CMD_REMOVE_SOURCE_FILE" xml:space="preserve">
+    <value>Q_uelldatei entfernen</value>
+  </data>
+  <data name="CMD_RENAME_BACKUP_COLLECTION" xml:space="preserve">
+    <value>Sicherung _umbenennen...</value>
+  </data>
+  <data name="COLUMN_BACKUP_FINISHED" xml:space="preserve">
+    <value>Sicherung beendet</value>
+  </data>
+  <data name="COLUMN_BACKUP_STARTED" xml:space="preserve">
+    <value>Sicherung gestartet</value>
+  </data>
+  <data name="COLUMN_COPIED_FILES" xml:space="preserve">
+    <value>Kopierte Dateien</value>
+  </data>
+  <data name="COLUMN_COPY_ERRORS" xml:space="preserve">
+    <value>Kopierfehler</value>
+  </data>
+  <data name="COLUMN_DIRECTORY_PATH" xml:space="preserve">
+    <value>Verzeichnispfad</value>
+  </data>
+  <data name="COLUMN_FILEPATH" xml:space="preserve">
+    <value>Dateipfad</value>
+  </data>
+  <data name="COLUMN_FILESIZE" xml:space="preserve">
+    <value>Dateigröße</value>
+  </data>
+  <data name="COLUMN_LAST_MODIFIED" xml:space="preserve">
+    <value>Zuletzt geändert</value>
+  </data>
+  <data name="LABEL_AUTOMATIC_BACKUP" xml:space="preserve">
+    <value>Automatische Sicherung:</value>
+  </data>
+  <data name="LABEL_BACKUP_COLLECTION" xml:space="preserve">
+    <value>_Sicherung:</value>
+  </data>
+  <data name="LABEL_DESTINATION_DIRECTORIES" xml:space="preserve">
+    <value>_Zielverzeichnisse:</value>
+  </data>
+  <data name="LABEL_EXCLUDE_PATTERN" xml:space="preserve">
+    <value>Ex_kludierungs-Muster:</value>
+  </data>
+  <data name="LABEL_FINISHED_AT" xml:space="preserve">
+    <value>Beendet am:</value>
+  </data>
+  <data name="LABEL_INCLUDE_PATTERN" xml:space="preserve">
+    <value>Inkl_udierungs-Muster:</value>
+  </data>
+  <data name="LABEL_LAST_BACKUP" xml:space="preserve">
+    <value>Letzte Sicherung:</value>
+  </data>
+  <data name="LABEL_NAME" xml:space="preserve">
+    <value>_Name:</value>
+  </data>
+  <data name="LABEL_NEXT_BACKUP_AT" xml:space="preserve">
+    <value>Nächste Sicherung am:</value>
+  </data>
+  <data name="LABEL_SOURCE_FILES" xml:space="preserve">
+    <value>_Quelldateien:</value>
+  </data>
+  <data name="LABEL_STARTED_AT" xml:space="preserve">
+    <value>Gestarted am:</value>
+  </data>
+  <data name="MENUITEM_EDIT" xml:space="preserve">
+    <value>_Bearbeiten</value>
+  </data>
+  <data name="MENUITEM_FILE" xml:space="preserve">
+    <value>_Datei</value>
+  </data>
+  <data name="MENUITEM_HELP" xml:space="preserve">
+    <value>_Hilfe</value>
+  </data>
+  <data name="MENUITEM_VIEW" xml:space="preserve">
+    <value>_Ansicht</value>
+  </data>
+  <data name="OPTION_DAILY" xml:space="preserve">
+    <value>Tä_glich</value>
+  </data>
+  <data name="OPTION_HOURLY" xml:space="preserve">
+    <value>S_tündlich</value>
+  </data>
+  <data name="OPTION_NEVER" xml:space="preserve">
+    <value>N_iemals</value>
+  </data>
+  <data name="QUESTION_DELETE_BACKUP_COLLECTION_0" xml:space="preserve">
+    <value>Wollen Sie die Sicherung '{0}' wirklich löschen?</value>
+  </data>
+  <data name="TEXT_ADD_DESTINATION_DIRECTORY" xml:space="preserve">
+    <value>Zielverzeichnis wird hinzugefügt...</value>
+  </data>
+  <data name="TEXT_ADD_SOURCE_FILES_FROM_DIRECTORY" xml:space="preserve">
+    <value>Quelldateien werden aus dem Verzeichnis hinzugefügt...</value>
+  </data>
+  <data name="TEXT_AUTOMATIC_BACKUP_0" xml:space="preserve">
+    <value>Automatische Sicherung für '{0}' läuft...</value>
+  </data>
+  <data name="TEXT_COPYRIGHT" xml:space="preserve">
+    <value>Copyright 2020 Niels Stockfleth
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</value>
+  </data>
+  <data name="TEXT_DESTINATION_FILES_0" xml:space="preserve">
+    <value>{0} Zieldateien.</value>
+  </data>
+  <data name="TEXT_DESTINATION_FILES_SELECTED_0_1" xml:space="preserve">
+    <value>{0} Zieldateien von {1} ausgewählt.</value>
+  </data>
+  <data name="TEXT_DESTINATION_FILE_0" xml:space="preserve">
+    <value>{0} Zieldatei.</value>
+  </data>
+  <data name="TEXT_DESTINATION_FILE_SELECTED_0_1" xml:space="preserve">
+    <value>{0} Zieldatei von {1} ausgewählt.</value>
+  </data>
+  <data name="TEXT_ERROR_OCCURRED_0" xml:space="preserve">
+    <value>Ein Fehler ist aufgetreten. {0}</value>
+  </data>
+  <data name="TEXT_FILTERING_SOURCE_FILES" xml:space="preserve">
+    <value>Muster werden auf die Quelldateien angewandt...</value>
+  </data>
+  <data name="TEXT_LOAD_BACKUP_COLLECTION" xml:space="preserve">
+    <value>Sicherung wird geladen...</value>
+  </data>
+  <data name="TEXT_REMOVE_DESTINATION_DIRECTORY" xml:space="preserve">
+    <value>Zielverzeichnis wird entfernt...</value>
+  </data>
+  <data name="TEXT_REMOVE_SOURCE_FILES" xml:space="preserve">
+    <value>Quelldateien werden entfernt...</value>
+  </data>
+  <data name="TEXT_RUN_BACKUP_COLLECTION" xml:space="preserve">
+    <value>Sicherung wird erstellt...</value>
+  </data>
+  <data name="TEXT_SOURCE_FILES_0" xml:space="preserve">
+    <value>{0} Quelldateien.</value>
+  </data>
+  <data name="TEXT_SOURCE_FILES_SELECTED_0_1" xml:space="preserve">
+    <value>{0} Quelldateien von {1} ausgewählt.</value>
+  </data>
+  <data name="TEXT_SOURCE_FILE_0" xml:space="preserve">
+    <value>{0} Quelldatei.</value>
+  </data>
+  <data name="TEXT_SOURCE_FILE_SELECTED_0_1" xml:space="preserve">
+    <value>{0} Quelldatei von {1} ausgewählt.</value>
+  </data>
+  <data name="TITLE_ADD_DESTINATION_DIRECTORY" xml:space="preserve">
+    <value>Zielverzeichnis hinzufügen</value>
+  </data>
+  <data name="TITLE_ADD_SOURCE_DIRECTORY" xml:space="preserve">
+    <value>Quellverzeichnis hinzufügen</value>
+  </data>
+  <data name="TITLE_ADD_SOURCE_FILE" xml:space="preserve">
+    <value>Quelldatei hinzufügen</value>
+  </data>
+  <data name="TITLE_NEW_BACKUP_COLLECTION" xml:space="preserve">
+    <value>Neue Sicherung erstellen</value>
+  </data>
+  <data name="TITLE_RENAME_BACKUP_COLLECTION" xml:space="preserve">
+    <value>Sicherung umbenennen</value>
+  </data>
+  <data name="TOOLTIP_ADD_DESTINATION_DIRECTORY" xml:space="preserve">
+    <value>Zielverzeichnis hinzufügen</value>
+  </data>
+  <data name="TOOLTIP_ADD_SOURCE_DIRECTORY" xml:space="preserve">
+    <value>Quelldateien aus Verzeichnis hinzufügen</value>
+  </data>
+  <data name="TOOLTIP_ADD_SOURCE_FILE" xml:space="preserve">
+    <value>Quelldatei hinzufügen</value>
+  </data>
+  <data name="TOOLTIP_BACKUP" xml:space="preserve">
+    <value>Sicherung erstellen</value>
+  </data>
+  <data name="TOOLTIP_REMOVE_DESTINATION_DIRECTORY" xml:space="preserve">
+    <value>Zielverzeichnis entfernen</value>
+  </data>
+  <data name="TOOLTIP_REMOVE_SOURCE_FILE" xml:space="preserve">
+    <value>Quelldatei entfernen</value>
+  </data>
+</root>

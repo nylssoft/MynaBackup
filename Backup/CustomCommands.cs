@@ -23,80 +23,78 @@ namespace Backup
     {
         public static readonly RoutedUICommand CreateBackupCollection =
             new RoutedUICommand(
-            "Neue Sicherung _anlegen...",
+            Properties.Resources.CMD_CREATE_BACKUP_COLLECTION,
             "CreateBackupCollection",
             typeof(CustomCommands));
 
         public static readonly RoutedUICommand RenameBackupCollection =
             new RoutedUICommand(
-            "Sicherung _umbenennen...",
+            Properties.Resources.CMD_RENAME_BACKUP_COLLECTION,
             "RenameBackupCollection",
             typeof(CustomCommands));
 
         public static readonly RoutedUICommand DeleteBackupCollection =
             new RoutedUICommand(
-            "Sicherung _löschen",
+            Properties.Resources.CMD_DELETE_BACKUP_COLLECTION,
             "DeleteBackupCollection",
             typeof(CustomCommands));
 
         public static readonly RoutedUICommand Refresh =
             new RoutedUICommand(
-            "_Aktualisieren",
+            Properties.Resources.CMD_REFRESH,
             "Refresh",
             typeof(CustomCommands),
             new InputGestureCollection() { new KeyGesture(Key.F5) });
 
         public static readonly RoutedUICommand AddSourceFile =
             new RoutedUICommand(
-            "Quelldatei _hinzufügen...",
+            Properties.Resources.CMD_ADD_SOURCE_FILE,
             "AddSourceFile",
             typeof(CustomCommands));
 
         public static readonly RoutedUICommand RemoveSourceFile =
             new RoutedUICommand(
-            "Quelldatei _entfernen",
+            Properties.Resources.CMD_REMOVE_SOURCE_FILE,
             "RemoveSourceFile",
             typeof(CustomCommands),
             new InputGestureCollection() { new KeyGesture(Key.Delete) });
 
         public static readonly RoutedUICommand AddSourceDirectory =
             new RoutedUICommand(
-            "Quell_verzeichnis hinzufügen...",
+            Properties.Resources.CMD_ADD_SOURCE_DIRECTORY,
             "AddSourceDirectory",
             typeof(CustomCommands));
 
         public static readonly RoutedUICommand AddDestinationDirectory =
             new RoutedUICommand(
-            "_Zielverzeichnis hinzufügen...",
+            Properties.Resources.CMD_ADD_DESTINATION_DIRECTORY,
             "AddDestinationDirectory",
             typeof(CustomCommands));
 
         public static readonly RoutedUICommand RemoveDestinationDirectory =
             new RoutedUICommand(
-            "Zielverzeichnis e_ntfernen",
+            Properties.Resources.CMD_REMOVE_DESTINATION_DIRECTORY,
             "RemoveDestinationDirectory",
             typeof(CustomCommands));
 
         public static readonly RoutedUICommand Backup =
             new RoutedUICommand(
-            "Sicherung _starten",
+            Properties.Resources.CMD_BACKUP,
             "Backup",
             typeof(CustomCommands));
 
         public static readonly RoutedUICommand Exit =
             new RoutedUICommand(
-            "_Beenden",
+            Properties.Resources.CMD_EXIT,
             "Exit",
             typeof(CustomCommands),
             new InputGestureCollection() { new KeyGesture(Key.F4, ModifierKeys.Alt) });
 
-
         public static readonly RoutedUICommand About =
             new RoutedUICommand(
-            "Ü_ber",
+            Properties.Resources.CMD_ABOUT,
             "About",
             typeof(CustomCommands));
-
 
     }
 }

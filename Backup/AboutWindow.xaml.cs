@@ -27,8 +27,8 @@ namespace Backup
             Owner = owner;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             var assembly = Assembly.GetExecutingAssembly();
-            var productAttribute = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), true);
-            var versionAttribute = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true);
+            var productAttribute = assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), true);
+            var versionAttribute = assembly.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true);
             if (productAttribute.Length > 0 && versionAttribute.Length > 0)
             {
                 var p = productAttribute[0] as AssemblyProductAttribute;

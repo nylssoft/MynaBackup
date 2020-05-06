@@ -77,7 +77,7 @@ namespace Backup
                     UpdateControls();
                     try
                     {
-                        labelProgress.Content = $"Automatische Sicherung für '{collectionName}' läuft...";
+                        labelProgress.Content = string.Format(Properties.Resources.TEXT_AUTOMATIC_BACKUP_0, collectionName);
                         next = await Task.Run(() => BackupManager.Backup(collectionName));
                         nextBackupMapping[collectionName] = next;
                         if (collectionName == comboBox.SelectedItem as string)
@@ -328,7 +328,7 @@ namespace Backup
                 if (regex != null)
                 {
                     IsTaskRunning = true;
-                    labelProgress.Content = "Dateien werden gefiltered...";
+                    labelProgress.Content = Properties.Resources.TEXT_FILTERING_SOURCE_FILES;
                     UpdateControls();
                     await FilterSourceFileModels(name, regex, null);
                 }
@@ -354,7 +354,7 @@ namespace Backup
                 if (regex != null)
                 {
                     IsTaskRunning = true;
-                    labelProgress.Content = "Dateien werden gefiltered...";
+                    labelProgress.Content = Properties.Resources.TEXT_FILTERING_SOURCE_FILES;
                     UpdateControls();
                     await FilterSourceFileModels(name, null, regex);
                 }
@@ -375,7 +375,7 @@ namespace Backup
         {
             MessageBox.Show(
                 this,
-                string.Format("Ein Fehler ist aufgetreten: {0}", ex.Message),
+                string.Format(Properties.Resources.TEXT_ERROR_OCCURRED_0, ex.Message),
                 Title,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
@@ -422,40 +422,48 @@ namespace Backup
             buttonApplyExcludePattern.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && IsExcludePatternChanged;
             if (listViewSourceFiles.SelectedItems.Count == 1)
             {
-                labelSourceFilesInfo.Content = $"{listViewSourceFiles.SelectedItems.Count} Quelldatei von {sourceFiles.Count} ausgewählt.";
+                labelSourceFilesInfo.Content = string.Format(Properties.Resources.TEXT_SOURCE_FILE_SELECTED_0_1,
+                    listViewSourceFiles.SelectedItems.Count, sourceFiles.Count);
             }
             else if (listViewSourceFiles.SelectedItems.Count > 1)
             {
-                labelSourceFilesInfo.Content = $"{listViewSourceFiles.SelectedItems.Count} Quelldateien von {sourceFiles.Count} ausgewählt.";
+                labelSourceFilesInfo.Content = string.Format(Properties.Resources.TEXT_SOURCE_FILES_SELECTED_0_1,
+                    listViewSourceFiles.SelectedItems.Count, sourceFiles.Count);
             }
             else
             {
                 if (sourceFiles.Count == 1)
                 {
-                    labelSourceFilesInfo.Content = $"{sourceFiles.Count} Quelldatei.";
+                    labelSourceFilesInfo.Content = string.Format(Properties.Resources.TEXT_SOURCE_FILE_0,
+                        sourceFiles.Count);
                 }
                 else
                 {
-                    labelSourceFilesInfo.Content = $"{sourceFiles.Count} Quelldateien.";
+                    labelSourceFilesInfo.Content = string.Format(Properties.Resources.TEXT_SOURCE_FILES_0,
+                        sourceFiles.Count);
                 }
             }
             if (listViewDirectories.SelectedItems.Count == 1)
             {
-                labelDirectoriesInfo.Content = $"{listViewDirectories.SelectedItems.Count} Zielverzeichnis von {destDirectories.Count} ausgewählt.";
+                labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_FILE_SELECTED_0_1,
+                    listViewDirectories.SelectedItems.Count, destDirectories.Count);
             }
             else if (listViewDirectories.SelectedItems.Count > 1)
             {
-                labelDirectoriesInfo.Content = $"{listViewDirectories.SelectedItems.Count} Zielverzeichnisse von {destDirectories.Count} ausgewählt.";
+                labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_FILES_SELECTED_0_1,
+                    listViewDirectories.SelectedItems.Count, destDirectories.Count);
             }
             else
             {
                 if (destDirectories.Count == 1)
                 {
-                    labelDirectoriesInfo.Content = $"{destDirectories.Count} Zielverzeichnis.";
+                    labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_FILE_0,
+                        destDirectories.Count);
                 }
                 else
                 {
-                    labelDirectoriesInfo.Content = $"{destDirectories.Count} Zielverzeichnisse.";
+                    labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_FILES_0,
+                        destDirectories.Count);
                 }
             }
         }
@@ -469,7 +477,7 @@ namespace Backup
                 IsTaskRunning = true;
                 IsExcludePatternChanged = false;
                 IsIncludePatternChanged = false;
-                labelProgress.Content = "Sicherung wird geladen...";
+                labelProgress.Content = Properties.Resources.TEXT_LOAD_BACKUP_COLLECTION;
                 sourceFiles.Clear();
                 destDirectories.Clear();
                 labelBackupStarted.Content = "-";
@@ -675,7 +683,7 @@ namespace Backup
         {
             try
             {
-                var wnd = new CreateBackupCollectionWindow(this, "Neue Sicherung erstellen", null);
+                var wnd = new CreateBackupCollectionWindow(this, Properties.Resources.TITLE_NEW_BACKUP_COLLECTION, null);
                 if (wnd.ShowDialog() == true)
                 {
                     BackupManager.Add(new BackupModel { Title = wnd.CollectionName });
@@ -698,12 +706,15 @@ namespace Backup
             if (IsTaskRunning || name == null) return;
             try
             {
-                var wnd = new CreateBackupCollectionWindow(this, "Sicherung umbennen", name);
+                var wnd = new CreateBackupCollectionWindow(this, Properties.Resources.TITLE_RENAME_BACKUP_COLLECTION, name);
                 if (wnd.ShowDialog() == true)
                 {
                     var model = BackupManager.Get(name);
+                    var oldname = model.Title;
                     model.Title = wnd.CollectionName;
-                    BackupManager.Update(model);
+                    var next = BackupManager.Update(model);
+                    nextBackupMapping.Remove(oldname);
+                    nextBackupMapping[model.Title] = next;
                     comboBox.Items[comboBox.SelectedIndex] = model.Title;
                     comboBox.SelectedItem = model.Title;
                 }
@@ -721,7 +732,7 @@ namespace Backup
             var name = comboBox?.SelectedItem as string;
             if (IsTaskRunning || name == null) return;
             if (MessageBox.Show(
-                $"Wollen Sie die Sicherung '{name}' wirklich löschen?",
+                string.Format(Properties.Resources.QUESTION_DELETE_BACKUP_COLLECTION_0, name),
                 Title,
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question,
@@ -759,7 +770,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                labelProgress.Content = "Sicherung wird erstellt...";
+                labelProgress.Content = Properties.Resources.TEXT_RUN_BACKUP_COLLECTION;
                 UpdateControls();
                 string name = comboBox.SelectedItem as string;
                 if (name != null)
@@ -791,6 +802,7 @@ namespace Backup
                 var regexInclude = GetIncludePatternRegex(model);
                 var openFileDialog = new OpenFileDialog
                 {
+                    Title = Properties.Resources.TITLE_ADD_SOURCE_FILE,
                     Multiselect = true
                 };
                 if (openFileDialog.ShowDialog() == true)
@@ -835,7 +847,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                labelProgress.Content = "Dateien werden entfernt...";
+                labelProgress.Content = Properties.Resources.TEXT_REMOVE_SOURCE_FILES;
                 UpdateControls();
                 var del = new List<SourceFileModel>();
                 foreach (SourceFileModel b in listViewSourceFiles.SelectedItems)
@@ -863,11 +875,15 @@ namespace Backup
                 var model = BackupManager.Get(name);
                 var regexInclude = GetIncludePatternRegex(model);
                 var regexExclude = GetExcludePatternRegex(model);
-                var dlg = new System.Windows.Forms.FolderBrowserDialog();
+                var dlg = new System.Windows.Forms.FolderBrowserDialog
+                {
+                    UseDescriptionForTitle = true,
+                    Description = Properties.Resources.TITLE_ADD_SOURCE_DIRECTORY
+                };
                 if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     IsTaskRunning = true;
-                    labelProgress.Content = "Dateien werden aus dem Verzeichnis hinzugefügt...";
+                    labelProgress.Content = Properties.Resources.TEXT_ADD_SOURCE_FILES_FROM_DIRECTORY;
                     UpdateControls();
                     var ret = await Task.Run(() => new DirectoryInfo(dlg.SelectedPath).GetAllFiles(null));
                     listViewSourceFiles.ItemsSource = null;
@@ -903,11 +919,15 @@ namespace Backup
         {
             var name = comboBox.SelectedItem as string;
             if (IsTaskRunning || name == null) return;
-            var dlg = new System.Windows.Forms.FolderBrowserDialog();
+            var dlg = new System.Windows.Forms.FolderBrowserDialog
+            {
+                UseDescriptionForTitle = true,
+                Description = Properties.Resources.TITLE_ADD_DESTINATION_DIRECTORY
+            };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 IsTaskRunning = true;
-                labelProgress.Content = "Zielverzeichnis wird hinzugefügt...";
+                labelProgress.Content = Properties.Resources.TEXT_ADD_DESTINATION_DIRECTORY;
                 UpdateControls();
                 try
                 {
@@ -939,7 +959,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                labelProgress.Content = "Zielverzeichnis wird entfernt...";
+                labelProgress.Content = Properties.Resources.TEXT_REMOVE_DESTINATION_DIRECTORY;
                 UpdateControls();
                 var del = new List<DestDirModel>();
                 foreach (DestDirModel b in listViewDirectories.SelectedItems)
