@@ -50,6 +50,7 @@ Temporary Items
 /Backup/obj
 /Backup/bin
 /Backup/Release
+/bin
 
 # personal user files
 *.user
