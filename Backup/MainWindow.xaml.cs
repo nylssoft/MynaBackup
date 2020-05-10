@@ -74,10 +74,11 @@ namespace Backup
                 if (diff.TotalSeconds > 0)
                 {
                     IsTaskRunning = true;
+                    labelProgress.Content = string.Format(Properties.Resources.TEXT_AUTOMATIC_BACKUP_0, collectionName);
                     UpdateControls();
+                    CommandManager.InvalidateRequerySuggested();
                     try
                     {
-                        labelProgress.Content = string.Format(Properties.Resources.TEXT_AUTOMATIC_BACKUP_0, collectionName);
                         next = await Task.Run(() => BackupManager.Backup(collectionName));
                         nextBackupMapping[collectionName] = next;
                         if (collectionName == comboBox.SelectedItem as string)
@@ -98,6 +99,7 @@ namespace Backup
             {
                 IsTaskRunning = false;
                 UpdateControls();
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 
@@ -323,13 +325,13 @@ namespace Backup
             if (IsTaskRunning || name == null) return;
             try
             {
-                var model = BackupManager.Get(name);
+                IsTaskRunning = true;
+                labelProgress.Content = Properties.Resources.TEXT_FILTERING_SOURCE_FILES;
+                UpdateControls();
+                var model = await Task.Run(()=>BackupManager.Get(name));
                 var regex = GetIncludePatternRegex(model);
                 if (regex != null)
                 {
-                    IsTaskRunning = true;
-                    labelProgress.Content = Properties.Resources.TEXT_FILTERING_SOURCE_FILES;
-                    UpdateControls();
                     await FilterSourceFileModels(name, regex, null);
                 }
             }
@@ -349,13 +351,13 @@ namespace Backup
             if (IsTaskRunning || name == null) return;
             try
             {
-                var model = BackupManager.Get(name);
+                IsTaskRunning = true;
+                labelProgress.Content = Properties.Resources.TEXT_FILTERING_SOURCE_FILES;
+                UpdateControls();
+                var model = await Task.Run(() => BackupManager.Get(name));
                 var regex = GetExcludePatternRegex(model);
                 if (regex != null)
                 {
-                    IsTaskRunning = true;
-                    labelProgress.Content = Properties.Resources.TEXT_FILTERING_SOURCE_FILES;
-                    UpdateControls();
                     await FilterSourceFileModels(name, null, regex);
                 }
             }
