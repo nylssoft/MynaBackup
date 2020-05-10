@@ -55,10 +55,10 @@
 	</Target>
 	-->
   <Target Name="BeforeBuild">
-    <Exec Command="dotnet publish ..\Backup\Backup.csproj -c $(Configuration) -r win-x86 -p:PublishProfile=..\Backup\Properties\PublishProfiles\x32self.pubxml" />
+    <Exec Command="dotnet publish ..\Backup\Backup.csproj -c $(Configuration) -r win-x86 -p:PublishProfile=..\Backup\Properties\PublishProfiles\x32.pubxml" />
     <PropertyGroup>
-      <LinkerBaseInputPaths>..\Backup\bin\$(Configuration)\netcoreapp3.1\publish\x32self</LinkerBaseInputPaths>
-      <DefineConstants>BasePath=..\Backup\bin\$(Configuration)\netcoreapp3.1\publish\x32self</DefineConstants>
+      <LinkerBaseInputPaths>..\Backup\bin\$(Configuration)\netcoreapp3.1\publish\x32</LinkerBaseInputPaths>
+      <DefineConstants>BasePath=..\Backup\bin\$(Configuration)\netcoreapp3.1\publish\x32</DefineConstants>
     </PropertyGroup>
   </Target>	
 </Project>

@@ -190,7 +190,7 @@
                     <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyExcludePattern" Height="23" Content="{x:Static props:Resources.BUTTON_APPLY_EXCLUDEPATTERN}" Click="ButtonApplyExcludePattern_Click" />
                 </Grid>
                 <Label Grid.Row="4" Grid.Column="0" Content="{x:Static props:Resources.LABEL_SOURCE_FILES}" Target="{Binding ElementName=listViewSourceFiles}"/>
-                <ListView Grid.Row="4" Grid.Column="1" x:Name="listViewSourceFiles" SelectionChanged="ListView_SelectionChanged" VirtualizingPanel.IsVirtualizing="False">
+                <ListView Grid.Row="4" Grid.Column="1" x:Name="listViewSourceFiles" SelectionChanged="ListView_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -232,7 +232,7 @@
                 </ListView>
                 <Label Grid.Row="5" Grid.Column="1" x:Name="labelSourceFilesInfo" />
                 <Label Grid.Row="6" Grid.Column="0" Content="{x:Static props:Resources.LABEL_DESTINATION_DIRECTORIES}" Target="{Binding ElementName=listViewDirectories}"/>
-                <ListView Grid.Row="6" Grid.Column="1" x:Name="listViewDirectories" SelectionChanged="ListView_SelectionChanged" VirtualizingPanel.IsVirtualizing="False">
+                <ListView Grid.Row="6" Grid.Column="1" x:Name="listViewDirectories" SelectionChanged="ListView_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
