@@ -22,6 +22,7 @@
         </Style>
     </Window.Resources>
     <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.ChangeSettings" CanExecute="Command_CanExecute" Executed="Command_Executed" />
         <CommandBinding Command="local:CustomCommands.CreateBackupCollection" CanExecute="Command_CanExecute" Executed="Command_Executed" />
         <CommandBinding Command="local:CustomCommands.RenameBackupCollection" CanExecute="Command_CanExecute" Executed="Command_Executed" />
         <CommandBinding Command="local:CustomCommands.DeleteBackupCollection" CanExecute="Command_CanExecute" Executed="Command_Executed" />
@@ -51,6 +52,8 @@
                         </MenuItem>
                         <MenuItem Command="local:CustomCommands.RenameBackupCollection" />
                         <MenuItem Command="local:CustomCommands.DeleteBackupCollection" />
+                        <Separator />
+                        <MenuItem Command="local:CustomCommands.ChangeSettings" />
                         <Separator />
                         <MenuItem Command="local:CustomCommands.Exit">
                             <MenuItem.Icon>

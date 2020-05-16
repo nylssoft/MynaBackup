@@ -168,6 +168,9 @@
   <data name="CMD_RENAME_BACKUP_COLLECTION" xml:space="preserve">
     <value>Sicherung _umbenennen...</value>
   </data>
+  <data name="CMD_SETTINGS" xml:space="preserve">
+    <value>_Einstellungen...</value>
+  </data>
   <data name="COLUMN_BACKUP_FINISHED" xml:space="preserve">
     <value>Sicherung beendet</value>
   </data>
@@ -210,8 +213,14 @@
   <data name="LABEL_INCLUDE_PATTERN" xml:space="preserve">
     <value>Inkl_udierungs-Muster:</value>
   </data>
+  <data name="LABEL_LANGUAGE" xml:space="preserve">
+    <value>_Sprache:</value>
+  </data>
   <data name="LABEL_LAST_BACKUP" xml:space="preserve">
     <value>Letzte Sicherung:</value>
+  </data>
+  <data name="LABEL_MINIMIZE_ON_STARTUP" xml:space="preserve">
+    <value>_Fenster minimieren nach dem Start:</value>
   </data>
   <data name="LABEL_NAME" xml:space="preserve">
     <value>_Name:</value>
@@ -240,11 +249,20 @@
   <data name="OPTION_DAILY" xml:space="preserve">
     <value>Tä_glich</value>
   </data>
+  <data name="OPTION_ENGLISH" xml:space="preserve">
+    <value>Englisch</value>
+  </data>
+  <data name="OPTION_GERMAN" xml:space="preserve">
+    <value>Deutsch</value>
+  </data>
   <data name="OPTION_HOURLY" xml:space="preserve">
     <value>S_tündlich</value>
   </data>
   <data name="OPTION_NEVER" xml:space="preserve">
     <value>N_iemals</value>
+  </data>
+  <data name="OPTION_SYSTEM" xml:space="preserve">
+    <value>Systemsprache</value>
   </data>
   <data name="QUESTION_DELETE_BACKUP_COLLECTION_0" xml:space="preserve">
     <value>Wollen Sie die Sicherung '{0}' wirklich löschen?</value>
@@ -292,6 +310,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   <data name="TEXT_REMOVE_SOURCE_FILES" xml:space="preserve">
     <value>Quelldateien werden entfernt...</value>
   </data>
+  <data name="TEXT_RESTART_REQUIRED" xml:space="preserve">
+    <value>Ein Neustart ist erforderlich damit die Änderungen wirksam werden.</value>
+  </data>
   <data name="TEXT_RUN_BACKUP_COLLECTION" xml:space="preserve">
     <value>Sicherung wird erstellt...</value>
   </data>
@@ -321,6 +342,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   </data>
   <data name="TITLE_RENAME_BACKUP_COLLECTION" xml:space="preserve">
     <value>Sicherung umbenennen</value>
+  </data>
+  <data name="TITLE_SETTINGS" xml:space="preserve">
+    <value>Einstellungen</value>
   </data>
   <data name="TOOLTIP_ADD_DESTINATION_DIRECTORY" xml:space="preserve">
     <value>Zielverzeichnis hinzufügen</value>

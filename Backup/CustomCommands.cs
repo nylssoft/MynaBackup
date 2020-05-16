@@ -21,6 +21,12 @@ namespace Backup
 {
     public class CustomCommands
     {
+        public static readonly RoutedUICommand ChangeSettings =
+            new RoutedUICommand(
+                Properties.Resources.CMD_SETTINGS,
+                "ChangeSettings",
+                typeof(CustomCommands));
+
         public static readonly RoutedUICommand CreateBackupCollection =
             new RoutedUICommand(
             Properties.Resources.CMD_CREATE_BACKUP_COLLECTION,

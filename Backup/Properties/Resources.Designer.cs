@@ -214,6 +214,15 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Settings....
+        /// </summary>
+        public static string CMD_SETTINGS {
+            get {
+                return ResourceManager.GetString("CMD_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup finished.
         /// </summary>
         public static string COLUMN_BACKUP_FINISHED {
@@ -340,11 +349,29 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Language:.
+        /// </summary>
+        public static string LABEL_LANGUAGE {
+            get {
+                return ResourceManager.GetString("LABEL_LANGUAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last backup:.
         /// </summary>
         public static string LABEL_LAST_BACKUP {
             get {
                 return ResourceManager.GetString("LABEL_LAST_BACKUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Minimize window on startup:.
+        /// </summary>
+        public static string LABEL_MINIMIZE_ON_STARTUP {
+            get {
+                return ResourceManager.GetString("LABEL_MINIMIZE_ON_STARTUP", resourceCulture);
             }
         }
         
@@ -430,6 +457,24 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string OPTION_ENGLISH {
+            get {
+                return ResourceManager.GetString("OPTION_ENGLISH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to German.
+        /// </summary>
+        public static string OPTION_GERMAN {
+            get {
+                return ResourceManager.GetString("OPTION_GERMAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to H_ourly.
         /// </summary>
         public static string OPTION_HOURLY {
@@ -444,6 +489,15 @@ namespace Backup.Properties {
         public static string OPTION_NEVER {
             get {
                 return ResourceManager.GetString("OPTION_NEVER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System language.
+        /// </summary>
+        public static string OPTION_SYSTEM {
+            get {
+                return ResourceManager.GetString("OPTION_SYSTEM", resourceCulture);
             }
         }
         
@@ -578,6 +632,15 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A restart is required to take effect of the changes..
+        /// </summary>
+        public static string TEXT_RESTART_REQUIRED {
+            get {
+                return ResourceManager.GetString("TEXT_RESTART_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Performing backup....
         /// </summary>
         public static string TEXT_RUN_BACKUP_COLLECTION {
@@ -664,6 +727,15 @@ namespace Backup.Properties {
         public static string TITLE_RENAME_BACKUP_COLLECTION {
             get {
                 return ResourceManager.GetString("TITLE_RENAME_BACKUP_COLLECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string TITLE_SETTINGS {
+            get {
+                return ResourceManager.GetString("TITLE_SETTINGS", resourceCulture);
             }
         }
         

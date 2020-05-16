@@ -168,6 +168,9 @@
   <data name="CMD_RENAME_BACKUP_COLLECTION" xml:space="preserve">
     <value>_Rename backup...</value>
   </data>
+  <data name="CMD_SETTINGS" xml:space="preserve">
+    <value>_Settings...</value>
+  </data>
   <data name="COLUMN_BACKUP_FINISHED" xml:space="preserve">
     <value>Backup finished</value>
   </data>
@@ -210,8 +213,14 @@
   <data name="LABEL_INCLUDE_PATTERN" xml:space="preserve">
     <value>_Include pattern:</value>
   </data>
+  <data name="LABEL_LANGUAGE" xml:space="preserve">
+    <value>_Language:</value>
+  </data>
   <data name="LABEL_LAST_BACKUP" xml:space="preserve">
     <value>Last backup:</value>
+  </data>
+  <data name="LABEL_MINIMIZE_ON_STARTUP" xml:space="preserve">
+    <value>_Minimize window on startup:</value>
   </data>
   <data name="LABEL_NAME" xml:space="preserve">
     <value>_Name:</value>
@@ -240,11 +249,20 @@
   <data name="OPTION_DAILY" xml:space="preserve">
     <value>_Daily</value>
   </data>
+  <data name="OPTION_ENGLISH" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="OPTION_GERMAN" xml:space="preserve">
+    <value>German</value>
+  </data>
   <data name="OPTION_HOURLY" xml:space="preserve">
     <value>H_ourly</value>
   </data>
   <data name="OPTION_NEVER" xml:space="preserve">
     <value>_Never</value>
+  </data>
+  <data name="OPTION_SYSTEM" xml:space="preserve">
+    <value>System language</value>
   </data>
   <data name="QUESTION_DELETE_BACKUP_COLLECTION_0" xml:space="preserve">
     <value>Do you really want to delete the backup '{0}'?</value>
@@ -292,6 +310,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   <data name="TEXT_REMOVE_SOURCE_FILES" xml:space="preserve">
     <value>Removing source files...</value>
   </data>
+  <data name="TEXT_RESTART_REQUIRED" xml:space="preserve">
+    <value>A restart is required to take effect of the changes.</value>
+  </data>
   <data name="TEXT_RUN_BACKUP_COLLECTION" xml:space="preserve">
     <value>Performing backup...</value>
   </data>
@@ -321,6 +342,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   </data>
   <data name="TITLE_RENAME_BACKUP_COLLECTION" xml:space="preserve">
     <value>Rename backup</value>
+  </data>
+  <data name="TITLE_SETTINGS" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="TOOLTIP_ADD_DESTINATION_DIRECTORY" xml:space="preserve">
     <value>Add destination directory</value>

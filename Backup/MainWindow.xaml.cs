@@ -199,6 +199,7 @@ namespace Backup
             switch (r.Name)
             {
                 case "CreateBackupCollection":
+                case "ChangeSettings":
                 case "About":
                 case "Exit":
                     e.CanExecute = !IsTaskRunning;
@@ -235,6 +236,9 @@ namespace Backup
             {
                 case "Exit":
                     Close();
+                    break;
+                case "ChangeSettings":
+                    ChangeSettingsCmd();
                     break;
                 case "CreateBackupCollection":
                     CreateBackupCollectionCmd();
@@ -410,6 +414,10 @@ namespace Backup
             timer.Tick += Timer_Tick;
             timer.Start();
             UpdateControls();
+            if (Properties.Settings.Default.MinimizeOnStartup)
+            {
+                WindowState = WindowState.Minimized;
+            }
         }
 
         private void UpdateControls()
@@ -680,6 +688,20 @@ namespace Backup
         }
 
         // --- commands
+
+        private void ChangeSettingsCmd()
+        {
+            try
+            {
+                new SettingsWindow(this, Properties.Resources.TITLE_SETTINGS).ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+            CommandManager.InvalidateRequerySuggested();
+            UpdateControls();
+        }
 
         private void CreateBackupCollectionCmd()
         {

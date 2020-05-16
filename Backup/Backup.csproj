@@ -11,6 +11,8 @@
     <Product>Myna Backup</Product>
     <Copyright>2020 Niels Stockfleth</Copyright>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
