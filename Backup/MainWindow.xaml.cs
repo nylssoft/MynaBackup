@@ -30,6 +30,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Threading;
 
 using Backup.Core;
+using Backup.Core.Impl;
 
 namespace Backup
 {
@@ -430,27 +431,49 @@ namespace Backup
             textBoxExcludePattern.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null;
             buttonApplyIncludePattern.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && IsIncludePatternChanged;
             buttonApplyExcludePattern.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && IsExcludePatternChanged;
-            if (listViewSourceFiles.SelectedItems.Count == 1)
+            long totalFileSize = 0;
+            if (listViewSourceFiles.SelectedItems.Count > 0)
             {
-                labelSourceFilesInfo.Content = string.Format(Properties.Resources.TEXT_SOURCE_FILE_SELECTED_0_1,
-                    listViewSourceFiles.SelectedItems.Count, sourceFiles.Count);
-            }
-            else if (listViewSourceFiles.SelectedItems.Count > 1)
-            {
-                labelSourceFilesInfo.Content = string.Format(Properties.Resources.TEXT_SOURCE_FILES_SELECTED_0_1,
-                    listViewSourceFiles.SelectedItems.Count, sourceFiles.Count);
+                foreach (SourceFileModel sf in listViewSourceFiles.SelectedItems)
+                {
+                    totalFileSize += sf.Size;
+                }
+                if (listViewSourceFiles.SelectedItems.Count == 1)
+                {
+                    labelSourceFilesInfo.Content = string.Format(
+                        Properties.Resources.TEXT_SOURCE_FILE_SELECTED_0_1_2,
+                        listViewSourceFiles.SelectedItems.Count,
+                        sourceFiles.Count,
+                        FormatFileSize(totalFileSize));
+                }
+                else if (listViewSourceFiles.SelectedItems.Count > 1)
+                {
+                    labelSourceFilesInfo.Content = string.Format(
+                        Properties.Resources.TEXT_SOURCE_FILES_SELECTED_0_1_2,
+                        listViewSourceFiles.SelectedItems.Count,
+                        sourceFiles.Count,
+                        FormatFileSize(totalFileSize));
+                }
             }
             else
             {
+                foreach (SourceFileModel sf in listViewSourceFiles.Items)
+                {
+                    totalFileSize += sf.Size;
+                }
                 if (sourceFiles.Count == 1)
                 {
-                    labelSourceFilesInfo.Content = string.Format(Properties.Resources.TEXT_SOURCE_FILE_0,
-                        sourceFiles.Count);
+                    labelSourceFilesInfo.Content = string.Format(
+                        Properties.Resources.TEXT_SOURCE_FILE_0_1,
+                        sourceFiles.Count,
+                        FormatFileSize(totalFileSize));
                 }
                 else
                 {
-                    labelSourceFilesInfo.Content = string.Format(Properties.Resources.TEXT_SOURCE_FILES_0,
-                        sourceFiles.Count);
+                    labelSourceFilesInfo.Content = string.Format(
+                        Properties.Resources.TEXT_SOURCE_FILES_0_1,
+                        sourceFiles.Count,
+                        FormatFileSize(totalFileSize));
                 }
             }
             if (listViewDirectories.SelectedItems.Count == 1)
@@ -685,6 +708,27 @@ namespace Backup
                     listViewSourceFiles.FocusItem(idx);
                 }
             }
+        }
+
+        private static string FormatFileSize(long fileSize)
+        {
+            double f = fileSize;
+            if (f < 1024)
+            {
+                return $"{f:F0} bytes";
+            }
+            f /= 1024;
+            if (f < 1024)
+            {
+                return $"{f:F1} KB";
+            }
+            f /= 1024;
+            if (f < 1024)
+            {
+                return $"{f:F2} MB";
+            }
+            f /= 1024;
+            return $"{f:F2} GB";
         }
 
         // --- commands

@@ -316,17 +316,17 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   <data name="TEXT_RUN_BACKUP_COLLECTION" xml:space="preserve">
     <value>Performing backup...</value>
   </data>
-  <data name="TEXT_SOURCE_FILES_0" xml:space="preserve">
-    <value>{0} source files.</value>
+  <data name="TEXT_SOURCE_FILES_0_1" xml:space="preserve">
+    <value>{0} source files. Total {1}.</value>
   </data>
-  <data name="TEXT_SOURCE_FILES_SELECTED_0_1" xml:space="preserve">
-    <value>{0} source files of {1} selected.</value>
+  <data name="TEXT_SOURCE_FILES_SELECTED_0_1_2" xml:space="preserve">
+    <value>{0} source files of {1} selected. Total {2}.</value>
   </data>
-  <data name="TEXT_SOURCE_FILE_0" xml:space="preserve">
-    <value>{0} source file.</value>
+  <data name="TEXT_SOURCE_FILE_0_1" xml:space="preserve">
+    <value>{0} source file. Total {1}.</value>
   </data>
-  <data name="TEXT_SOURCE_FILE_SELECTED_0_1" xml:space="preserve">
-    <value>{0} source file of {1} selected.</value>
+  <data name="TEXT_SOURCE_FILE_SELECTED_0_1_2" xml:space="preserve">
+    <value>{0} source file of {1} selected.Total {2}.</value>
   </data>
   <data name="TITLE_ADD_DESTINATION_DIRECTORY" xml:space="preserve">
     <value>Add destination directory</value>

@@ -650,38 +650,38 @@ namespace Backup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} source file..
+        ///   Looks up a localized string similar to {0} source file. Total {1}..
         /// </summary>
-        public static string TEXT_SOURCE_FILE_0 {
+        public static string TEXT_SOURCE_FILE_0_1 {
             get {
-                return ResourceManager.GetString("TEXT_SOURCE_FILE_0", resourceCulture);
+                return ResourceManager.GetString("TEXT_SOURCE_FILE_0_1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} source file of {1} selected..
+        ///   Looks up a localized string similar to {0} source file of {1} selected.Total {2}..
         /// </summary>
-        public static string TEXT_SOURCE_FILE_SELECTED_0_1 {
+        public static string TEXT_SOURCE_FILE_SELECTED_0_1_2 {
             get {
-                return ResourceManager.GetString("TEXT_SOURCE_FILE_SELECTED_0_1", resourceCulture);
+                return ResourceManager.GetString("TEXT_SOURCE_FILE_SELECTED_0_1_2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} source files..
+        ///   Looks up a localized string similar to {0} source files. Total {1}..
         /// </summary>
-        public static string TEXT_SOURCE_FILES_0 {
+        public static string TEXT_SOURCE_FILES_0_1 {
             get {
-                return ResourceManager.GetString("TEXT_SOURCE_FILES_0", resourceCulture);
+                return ResourceManager.GetString("TEXT_SOURCE_FILES_0_1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} source files of {1} selected..
+        ///   Looks up a localized string similar to {0} source files of {1} selected. Total {2}..
         /// </summary>
-        public static string TEXT_SOURCE_FILES_SELECTED_0_1 {
+        public static string TEXT_SOURCE_FILES_SELECTED_0_1_2 {
             get {
-                return ResourceManager.GetString("TEXT_SOURCE_FILES_SELECTED_0_1", resourceCulture);
+                return ResourceManager.GetString("TEXT_SOURCE_FILES_SELECTED_0_1_2", resourceCulture);
             }
         }
         
