@@ -31,6 +31,8 @@ using System.Windows.Threading;
 
 using Backup.Core;
 using Backup.Core.Impl;
+using System.Windows.Forms.VisualStyles;
+using System.Diagnostics;
 
 namespace Backup
 {
@@ -75,7 +77,7 @@ namespace Backup
                 if (diff.TotalSeconds > 0)
                 {
                     IsTaskRunning = true;
-                    labelProgress.Content = string.Format(Properties.Resources.TEXT_AUTOMATIC_BACKUP_0, collectionName);
+                    SetProgress(string.Format(Properties.Resources.TEXT_AUTOMATIC_BACKUP_0, collectionName));
                     UpdateControls();
                     CommandManager.InvalidateRequerySuggested();
                     try
@@ -86,11 +88,11 @@ namespace Backup
                         {
                             await InitBackupCollection(collectionName);
                         }
-                        labelProgress.Content = "";
+                        SetProgress();
                     }
                     catch (Exception ex)
                     {
-                        labelProgress.Content = ex.Message;
+                        SetProgress(ex.Message);
                         break;
                     }
                 }
@@ -331,7 +333,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                labelProgress.Content = Properties.Resources.TEXT_FILTERING_SOURCE_FILES;
+                SetProgress(Properties.Resources.TEXT_FILTERING_SOURCE_FILES);
                 UpdateControls();
                 var model = await Task.Run(()=>BackupManager.Get(name));
                 var regex = GetIncludePatternRegex(model);
@@ -344,7 +346,7 @@ namespace Backup
             {
                 HandleError(ex);
             }
-            labelProgress.Content = "";
+            SetProgress();
             IsTaskRunning = false;
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
@@ -357,7 +359,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                labelProgress.Content = Properties.Resources.TEXT_FILTERING_SOURCE_FILES;
+                SetProgress(Properties.Resources.TEXT_FILTERING_SOURCE_FILES);
                 UpdateControls();
                 var model = await Task.Run(() => BackupManager.Get(name));
                 var regex = GetExcludePatternRegex(model);
@@ -370,13 +372,27 @@ namespace Backup
             {
                 HandleError(ex);
             }
-            labelProgress.Content = "";
+            SetProgress();
             IsTaskRunning = false;
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
         }
 
         // --- helper methods
+
+        private void SetProgress(string txt = "", int value = 0, int total = 0)
+        {
+            textBlockProgress.Text = txt;
+            if (value == 0 || total == 0)
+            {
+                progressBar.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                progressBar.Visibility = Visibility.Visible;
+                progressBar.Value = (double)value * 100.0 / (double) total;
+            }
+        }
 
         private void HandleError(Exception ex)
         {
@@ -510,7 +526,7 @@ namespace Backup
                 IsTaskRunning = true;
                 IsExcludePatternChanged = false;
                 IsIncludePatternChanged = false;
-                labelProgress.Content = Properties.Resources.TEXT_LOAD_BACKUP_COLLECTION;
+                SetProgress(Properties.Resources.TEXT_LOAD_BACKUP_COLLECTION);
                 sourceFiles.Clear();
                 destDirectories.Clear();
                 labelBackupStarted.Content = "-";
@@ -586,7 +602,7 @@ namespace Backup
             {
                 HandleError(ex);
             }
-            labelProgress.Content = "";
+            SetProgress();
             IsTaskRunning = false;
             listViewSourceFiles.ItemsSource = sourceFiles;
             listViewDirectories.ItemsSource = destDirectories;
@@ -838,7 +854,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                labelProgress.Content = Properties.Resources.TEXT_RUN_BACKUP_COLLECTION;
+                SetProgress(Properties.Resources.TEXT_RUN_BACKUP_COLLECTION);
                 UpdateControls();
                 string name = comboBox.SelectedItem as string;
                 if (name != null)
@@ -852,7 +868,7 @@ namespace Backup
             {
                 HandleError(ex);
             }
-            labelProgress.Content = "";
+            SetProgress();
             IsTaskRunning = false;
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
@@ -915,7 +931,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                labelProgress.Content = Properties.Resources.TEXT_REMOVE_SOURCE_FILES;
+                SetProgress(Properties.Resources.TEXT_REMOVE_SOURCE_FILES);
                 UpdateControls();
                 var del = new List<SourceFileModel>();
                 foreach (SourceFileModel b in listViewSourceFiles.SelectedItems)
@@ -928,7 +944,7 @@ namespace Backup
             {
                 HandleError(ex);
             }
-            labelProgress.Content = "";
+            SetProgress();
             IsTaskRunning = false;
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
@@ -951,7 +967,7 @@ namespace Backup
                 if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     IsTaskRunning = true;
-                    labelProgress.Content = Properties.Resources.TEXT_ADD_SOURCE_FILES_FROM_DIRECTORY;
+                    SetProgress(Properties.Resources.TEXT_ADD_SOURCE_FILES_FROM_DIRECTORY);
                     UpdateControls();
                     var ret = await Task.Run(() => new DirectoryInfo(dlg.SelectedPath).GetAllFiles(null));
                     listViewSourceFiles.ItemsSource = null;
@@ -978,7 +994,7 @@ namespace Backup
                 HandleError(ex);
             }
             IsTaskRunning = false;
-            labelProgress.Content = "";
+            SetProgress();
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
         }
@@ -995,7 +1011,7 @@ namespace Backup
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 IsTaskRunning = true;
-                labelProgress.Content = Properties.Resources.TEXT_ADD_DESTINATION_DIRECTORY;
+                SetProgress(Properties.Resources.TEXT_ADD_DESTINATION_DIRECTORY);
                 UpdateControls();
                 try
                 {
@@ -1014,7 +1030,7 @@ namespace Backup
                     HandleError(ex);
                 }
                 IsTaskRunning = false;
-                labelProgress.Content = "";
+                SetProgress();
                 CommandManager.InvalidateRequerySuggested();
                 UpdateControls();
             }
@@ -1027,7 +1043,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                labelProgress.Content = Properties.Resources.TEXT_REMOVE_DESTINATION_DIRECTORY;
+                SetProgress(Properties.Resources.TEXT_REMOVE_DESTINATION_DIRECTORY);
                 UpdateControls();
                 var del = new List<DestDirModel>();
                 foreach (DestDirModel b in listViewDirectories.SelectedItems)
@@ -1054,7 +1070,7 @@ namespace Backup
                 HandleError(ex);
             }
             IsTaskRunning = false;
-            labelProgress.Content = "";
+            SetProgress();
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
         }

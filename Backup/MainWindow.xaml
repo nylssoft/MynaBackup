@@ -290,8 +290,15 @@
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>
-                <Label Grid.Row="7" Grid.Column="1" x:Name="labelDirectoriesInfo" />
-                <Label Grid.Row="8" Grid.Column="1" x:Name="labelProgress" />
+                <Label Grid.Row="7" Grid.Column="1" Name="labelDirectoriesInfo" />
+                <StatusBar Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}">
+                    <StatusBarItem>
+                        <TextBlock Name="textBlockProgress" />
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <ProgressBar Width="100" Height="20" Name="progressBar" Visibility="Hidden"/>
+                    </StatusBarItem>
+                </StatusBar>
             </Grid>
         </DockPanel>
     </Grid>
