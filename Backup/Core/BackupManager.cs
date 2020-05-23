@@ -296,6 +296,7 @@ namespace Backup.Core
                 {
                     current++;
                     double percent = total > 0 ? current * 100.0 / total : 0.0;
+                    progress?.Report(percent);
                     cancellationToken.ThrowIfCancellationRequested();
                     if (File.Exists(sf.PathName))
                     {
