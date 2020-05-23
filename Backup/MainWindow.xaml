@@ -296,7 +296,13 @@
                         <TextBlock Name="textBlockProgress" />
                     </StatusBarItem>
                     <StatusBarItem>
-                        <ProgressBar Width="100" Height="20" Name="progressBar" Visibility="Hidden"/>
+                        <Grid>
+                            <ProgressBar Visibility="Hidden" Width="200" Height="21" Name="progressBar" />
+                            <TextBlock Visibility="Hidden" Name="progressTextBlock" Text="{Binding ElementName=progressBar, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <Button Visibility="Hidden" Name="buttonCancelProgress" Height="23" Width="100" Content="{x:Static props:Resources.BUTTON_CANCEL}" Click="ButtonCancelProgress_Click" />
                     </StatusBarItem>
                 </StatusBar>
             </Grid>

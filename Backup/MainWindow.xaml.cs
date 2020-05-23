@@ -30,9 +30,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Threading;
 
 using Backup.Core;
-using Backup.Core.Impl;
-using System.Windows.Forms.VisualStyles;
-using System.Diagnostics;
+using System.Threading;
 
 namespace Backup
 {
@@ -55,6 +53,8 @@ namespace Backup
         private bool IsExcludePatternChanged { get; set; } = false;
 
         private bool IsTimerProcessing { get; set; } = false;
+
+        private CancellationTokenSource cts;
 
         public MainWindow()
         {
@@ -82,7 +82,9 @@ namespace Backup
                     CommandManager.InvalidateRequerySuggested();
                     try
                     {
-                        next = await Task.Run(() => BackupManager.Backup(collectionName));
+                        cts = new CancellationTokenSource();
+                        var progress = new Progress<double>((percent) => UpdateProgress(percent));
+                        next = await Task.Run(() => BackupManager.Backup(collectionName, progress, cts.Token));
                         nextBackupMapping[collectionName] = next;
                         if (collectionName == comboBox.SelectedItem as string)
                         {
@@ -92,7 +94,10 @@ namespace Backup
                     }
                     catch (Exception ex)
                     {
-                        SetProgress(ex.Message);
+                        if (!cts.IsCancellationRequested)
+                        {
+                            SetProgress(ex.Message);
+                        }
                         break;
                     }
                 }
@@ -378,20 +383,27 @@ namespace Backup
             UpdateControls();
         }
 
+        private void ButtonCancelProgress_Click(object sender, RoutedEventArgs e)
+        {
+            cts?.Cancel();
+        }
+
         // --- helper methods
 
-        private void SetProgress(string txt = "", int value = 0, int total = 0)
+        private void SetProgress(string txt = "")
         {
             textBlockProgress.Text = txt;
-            if (value == 0 || total == 0)
-            {
-                progressBar.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                progressBar.Visibility = Visibility.Visible;
-                progressBar.Value = (double)value * 100.0 / (double) total;
-            }
+            progressBar.Visibility = Visibility.Hidden;
+            progressTextBlock.Visibility = Visibility.Hidden;
+            buttonCancelProgress.Visibility = Visibility.Hidden;
+        }
+
+        private void UpdateProgress(double percent)
+        {
+            progressBar.Visibility = Visibility.Visible;
+            progressTextBlock.Visibility = Visibility.Visible;
+            buttonCancelProgress.Visibility = Visibility.Visible;
+            progressBar.Value = percent;
         }
 
         private void HandleError(Exception ex)
@@ -859,21 +871,25 @@ namespace Backup
                 string name = comboBox.SelectedItem as string;
                 if (name != null)
                 {
-                    var next = await Task.Run(() => BackupManager.Backup(name));
+                    cts = new CancellationTokenSource();
+                    var progress = new Progress<double>((percent) => UpdateProgress(percent));
+                    var next = await Task.Run( () => BackupManager.Backup(name, progress, cts.Token));
                     nextBackupMapping[name] = next;
                     await InitBackupCollection(name);
                 }
             }
             catch (Exception ex)
             {
-                HandleError(ex);
+                if (!cts.IsCancellationRequested)
+                {
+                    HandleError(ex);
+                }
             }
             SetProgress();
             IsTaskRunning = false;
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
         }
-
 
         private async void AddSourceFileCmd()
         {

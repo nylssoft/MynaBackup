@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Backup.Core.Impl;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Backup.Core
 {
@@ -243,7 +245,7 @@ namespace Backup.Core
             dbContext.SaveChanges();
         }
 
-        public static DateTime? Backup(string title)
+        public static DateTime? Backup(string title, IProgress<double> progress, CancellationToken cancellationToken)
         {
             DateTime? nextBackup = null;
             using var dbContext = new BackupDbContext(dbOptions);
@@ -260,10 +262,16 @@ namespace Backup.Core
             dbContext.Entry(col)
                 .Collection(col => col.SourceFiles)
                 .Load();
+            int total = col.SourceFiles.Count * col.DestinationDirectories.Count;
+            int current = 0;
             foreach (var dd in col.DestinationDirectories)
             {
                 if (!Directory.Exists(dd.PathName))
                 {
+                    current += col.SourceFiles.Count;
+                    double percent = total > 0 ? current * 100.0 / total : 0.0;
+                    progress?.Report(percent);
+                    cancellationToken.ThrowIfCancellationRequested();
                     continue;
                 }
                 dbContext.Entry(dd)
@@ -286,9 +294,12 @@ namespace Backup.Core
                 var usedSourceFileIds = new HashSet<long>();
                 foreach (var sf in col.SourceFiles)
                 {
+                    current++;
+                    double percent = total > 0 ? current * 100.0 / total : 0.0;
+                    cancellationToken.ThrowIfCancellationRequested();
                     if (File.Exists(sf.PathName))
                     {
-                        BackupToDestinationDirectory(sf, baseDir, dd, dateFolder);
+                        BackupToDestinationDirectory(sf, baseDir, dd, dateFolder, cancellationToken);
                         usedSourceFileIds.Add(sf.SourceFileId);
                     }
                 }
@@ -362,7 +373,7 @@ namespace Backup.Core
         }
 
         private static string CopyToDestinationFile(
-            string rootDirectory, string baseDirectory, string dateFolder, string sourceFileName)
+            string rootDirectory, string baseDirectory, string dateFolder, string sourceFileName, CancellationToken cancellationToken)
         {
             string relativDir = Path.GetDirectoryName(sourceFileName);
             if (!relativDir.StartsWith(baseDirectory))
@@ -385,8 +396,28 @@ namespace Backup.Core
             {
                 MoveToHistoryFile(rootDirectory, dateFolder, destinationFileName);
             }
-            File.Copy(sourceFileName, destinationFileName);
+            try
+            {
+                CopyFileAsync(sourceFileName, destinationFileName, cancellationToken).Wait();
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+            catch (Exception)
+            {
+                // cleanup if copy has been cancelled
+                if (File.Exists(destinationFileName))
+                {
+                    File.Delete(destinationFileName);
+                }
+                throw;
+            }
             return destinationFileName;
+        }
+
+        private static async Task CopyFileAsync(string sourcePath, string destinationPath, CancellationToken cancellationToken)
+        {
+            using Stream source = File.Open(sourcePath, FileMode.Open);
+            using Stream destination = File.Create(destinationPath);
+            await source.CopyToAsync(destination, cancellationToken);
         }
 
         private static void DeleteEmptyDirectories(string dir)
@@ -433,7 +464,7 @@ namespace Backup.Core
         }
 
         private static void BackupToDestinationDirectory(
-            SourceFile sf, string baseDir, DestinationDirectory dd, string dateFolder)
+            SourceFile sf, string baseDir, DestinationDirectory dd, string dateFolder, CancellationToken cancellationToken)
         {
             var lastWrittenTimeUtc = File.GetLastWriteTimeUtc(sf.PathName);
             if (sf.ContentHash == null || lastWrittenTimeUtc != sf.LastWrittenTimeUtc)
@@ -448,7 +479,7 @@ namespace Backup.Core
                 try
                 {
                     string destPathName = CopyToDestinationFile(
-                        dd.PathName, baseDir, dateFolder, sf.PathName);
+                        dd.PathName, baseDir, dateFolder, sf.PathName, cancellationToken);
                     if (createnew)
                     {
                         df = new DestinationFile
@@ -463,6 +494,10 @@ namespace Backup.Core
                 }
                 catch (Exception ex)
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        throw;
+                    }
                     dd.CopyFailures.Add(new CopyFailure
                     {
                         SourceFileId = sf.SourceFileId,
