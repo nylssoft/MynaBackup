@@ -171,6 +171,12 @@
   <data name="CMD_SETTINGS" xml:space="preserve">
     <value>_Settings...</value>
   </data>
+  <data name="CMD_SHOW_OVERVIEW" xml:space="preserve">
+    <value>Show _Overview...</value>
+  </data>
+  <data name="COLUMN_BACKUP" xml:space="preserve">
+    <value>Backup</value>
+  </data>
   <data name="COLUMN_BACKUP_FINISHED" xml:space="preserve">
     <value>Backup finished</value>
   </data>
@@ -192,8 +198,14 @@
   <data name="COLUMN_FILESIZE" xml:space="preserve">
     <value>File size</value>
   </data>
+  <data name="COLUMN_FINISHED" xml:space="preserve">
+    <value>Finished</value>
+  </data>
   <data name="COLUMN_LAST_MODIFIED" xml:space="preserve">
     <value>Last modified</value>
+  </data>
+  <data name="COLUMN_NEXT" xml:space="preserve">
+    <value>Next</value>
   </data>
   <data name="LABEL_AUTOMATIC_BACKUP" xml:space="preserve">
     <value>Automatic backup:</value>
@@ -339,6 +351,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   </data>
   <data name="TITLE_NEW_BACKUP_COLLECTION" xml:space="preserve">
     <value>Create new backup</value>
+  </data>
+  <data name="TITLE_OVERVIEW" xml:space="preserve">
+    <value>Myna Backup - Overview</value>
   </data>
   <data name="TITLE_RENAME_BACKUP_COLLECTION" xml:space="preserve">
     <value>Rename backup</value>

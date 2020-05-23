@@ -1,5 +1,5 @@
 ﻿/*
-    Myna Bank
+    Myna Backup
     Copyright (C) 2020 Niels Stockfleth
 
     This program is free software: you can redistribute it and/or modify
@@ -15,22 +15,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Backup.Core;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Microsoft.Win32;
 using System.Windows.Input;
-using System.Text.RegularExpressions;
 using System.Windows.Threading;
-
-using Backup.Core;
-using System.Threading;
 
 namespace Backup
 {
@@ -45,6 +44,10 @@ namespace Backup
         private readonly SortDecorator sortDestDirectoriesDecorator = new SortDecorator(ListSortDirection.Descending);
 
         private readonly Dictionary<string, DateTime?> nextBackupMapping = new Dictionary<string, DateTime?>();
+
+        private OverviewWindow overviewWindow = null;
+
+        private readonly ObservableCollection<OverviewModel> overviews = new ObservableCollection<OverviewModel>();
 
         private bool IsTaskRunning { get; set; } = false;
 
@@ -86,6 +89,7 @@ namespace Backup
                         var progress = new Progress<double>((percent) => UpdateProgress(percent));
                         next = await Task.Run(() => BackupManager.Backup(collectionName, progress, cts.Token));
                         nextBackupMapping[collectionName] = next;
+                        UpdateOverview(collectionName, DateTime.Now, next);
                         if (collectionName == comboBox.SelectedItem as string)
                         {
                             await InitBackupCollection(collectionName);
@@ -97,6 +101,8 @@ namespace Backup
                         if (!cts.IsCancellationRequested)
                         {
                             SetProgress(ex.Message);
+                            // avoid recursive calls, retry after 1 hour
+                            nextBackupMapping[collectionName] = DateTime.Now.AddHours(1);
                         }
                         break;
                     }
@@ -187,6 +193,7 @@ namespace Backup
                 {
                     labelBackupNextStart.Content = "-";
                 }
+                UpdateOverview(name, model.Finished, next);
             }
             catch (Exception ex)
             {
@@ -224,6 +231,9 @@ namespace Backup
                     break;
                 case "RemoveDestinationDirectory":
                     e.CanExecute = name != null && !IsTaskRunning && listViewDirectories.SelectedItem != null;
+                    break;
+                case "ShowOverview":
+                    e.CanExecute = !IsTaskRunning && (overviewWindow == null || overviewWindow.IsClosed);
                     break;
                 case "Refresh":
                     e.CanExecute = !IsTaskRunning && name != null && sourceFiles.Count > 0;
@@ -272,6 +282,9 @@ namespace Backup
                 case "RemoveDestinationDirectory":
                     RemoveDestinationDirectoryCmd();
                     break;
+                case "ShowOverview":
+                    ShowOverviewCmd();
+                    break;
                 case "Refresh":
                     RefreshCmd();
                     break;
@@ -307,6 +320,11 @@ namespace Backup
                 {
                     e.Cancel = true;
                     return;
+                }
+                if (overviewWindow != null && !overviewWindow.IsClosed)
+                {
+                    overviewWindow.Close();
+                    overviewWindow = null;
                 }
                 Properties.Settings.Default.Save();
             }
@@ -608,6 +626,7 @@ namespace Backup
                         };
                         destDirectories.Add(ddmodel);
                     }
+                    UpdateOverview(name, model.Finished, nextBackupMapping[name]);
                 }
             }
             catch (Exception ex)
@@ -620,6 +639,29 @@ namespace Backup
             listViewDirectories.ItemsSource = destDirectories;
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
+        }
+
+        private void UpdateOverview(string collectionName, DateTime? lastRun, DateTime? nextRun, bool remove = false)
+        {
+            bool found = false;
+            foreach (var overview in overviews)
+            {
+                if (overview.Name == collectionName)
+                {
+                    found = true;
+                    overview.LastRun = lastRun;
+                    overview.NextRun = nextRun;
+                    if (remove)
+                    {
+                        overviews.Remove(overview);
+                    }
+                    break;
+                }
+            }
+            if (!found)
+            {
+                overviews.Add(new OverviewModel { Name = collectionName, LastRun = lastRun, NextRun = nextRun });
+            }
         }
 
         private bool AddDestinationDirectory(string name, string path)
@@ -813,6 +855,8 @@ namespace Backup
                     nextBackupMapping[model.Title] = next;
                     comboBox.Items[comboBox.SelectedIndex] = model.Title;
                     comboBox.SelectedItem = model.Title;
+                    UpdateOverview(oldname, null, null, true);
+                    UpdateOverview(model.Title, model.Finished, next);
                 }
             }
             catch (Exception ex)
@@ -844,6 +888,7 @@ namespace Backup
                         comboBox.SelectedIndex = Math.Min(idx, comboBox.Items.Count - 1);
                     }
                     nextBackupMapping.Remove(name);
+                    UpdateOverview(name, null, null, true);
                 }
                 catch (Exception ex)
                 {
@@ -1102,6 +1147,43 @@ namespace Backup
             {
                 HandleError(ex);
             }
+        }
+
+        private async void ShowOverviewCmd()
+        {
+            try
+            {
+                if (overviewWindow == null || overviewWindow.IsClosed)
+                {
+                    IsTaskRunning = true;
+                    SetProgress(Properties.Resources.TEXT_LOAD_BACKUP_COLLECTION);
+                    UpdateControls();
+                    overviews.Clear();
+                    var collectionNames = BackupManager.GetAll();
+                    foreach (var collectionName in collectionNames)
+                    {
+                        var backupModel = await Task.Run(() => BackupManager.Get(collectionName));
+                        var dt = backupModel.Finished;
+                        var m = new OverviewModel { Name = collectionName, LastRun = dt };
+                        var next = nextBackupMapping[collectionName];
+                        if (next.HasValue)
+                        {
+                            m.NextRun = next;
+                        }
+                        overviews.Add(m);
+                    }
+                    overviewWindow = new OverviewWindow(null, Properties.Resources.TITLE_OVERVIEW, overviews);
+                    overviewWindow.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+            IsTaskRunning = false;
+            SetProgress();
+            CommandManager.InvalidateRequerySuggested();
+            UpdateControls();
         }
 
     }

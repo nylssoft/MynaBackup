@@ -1,5 +1,5 @@
 ﻿/*
-    Myna Bank
+    Myna Backup
     Copyright (C) 2020 Niels Stockfleth
 
     This program is free software: you can redistribute it and/or modify
@@ -44,6 +44,12 @@ namespace Backup
             Properties.Resources.CMD_DELETE_BACKUP_COLLECTION,
             "DeleteBackupCollection",
             typeof(CustomCommands));
+
+        public static readonly RoutedUICommand ShowOverview =
+            new RoutedUICommand(
+                Properties.Resources.CMD_SHOW_OVERVIEW,
+                "ShowOverview",
+                typeof(CustomCommands));
 
         public static readonly RoutedUICommand Refresh =
             new RoutedUICommand(

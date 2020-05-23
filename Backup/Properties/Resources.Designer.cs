@@ -223,6 +223,24 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show _Overview....
+        /// </summary>
+        public static string CMD_SHOW_OVERVIEW {
+            get {
+                return ResourceManager.GetString("CMD_SHOW_OVERVIEW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup.
+        /// </summary>
+        public static string COLUMN_BACKUP {
+            get {
+                return ResourceManager.GetString("COLUMN_BACKUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup finished.
         /// </summary>
         public static string COLUMN_BACKUP_FINISHED {
@@ -286,11 +304,29 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finished.
+        /// </summary>
+        public static string COLUMN_FINISHED {
+            get {
+                return ResourceManager.GetString("COLUMN_FINISHED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last modified.
         /// </summary>
         public static string COLUMN_LAST_MODIFIED {
             get {
                 return ResourceManager.GetString("COLUMN_LAST_MODIFIED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string COLUMN_NEXT {
+            get {
+                return ResourceManager.GetString("COLUMN_NEXT", resourceCulture);
             }
         }
         
@@ -718,6 +754,15 @@ namespace Backup.Properties {
         public static string TITLE_NEW_BACKUP_COLLECTION {
             get {
                 return ResourceManager.GetString("TITLE_NEW_BACKUP_COLLECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Myna Backup - Overview.
+        /// </summary>
+        public static string TITLE_OVERVIEW {
+            get {
+                return ResourceManager.GetString("TITLE_OVERVIEW", resourceCulture);
             }
         }
         

@@ -171,6 +171,12 @@
   <data name="CMD_SETTINGS" xml:space="preserve">
     <value>_Einstellungen...</value>
   </data>
+  <data name="CMD_SHOW_OVERVIEW" xml:space="preserve">
+    <value>Ü_bersicht anzeigen...</value>
+  </data>
+  <data name="COLUMN_BACKUP" xml:space="preserve">
+    <value>Sicherung</value>
+  </data>
   <data name="COLUMN_BACKUP_FINISHED" xml:space="preserve">
     <value>Sicherung beendet</value>
   </data>
@@ -192,8 +198,14 @@
   <data name="COLUMN_FILESIZE" xml:space="preserve">
     <value>Dateigröße</value>
   </data>
+  <data name="COLUMN_FINISHED" xml:space="preserve">
+    <value>Beendet</value>
+  </data>
   <data name="COLUMN_LAST_MODIFIED" xml:space="preserve">
     <value>Zuletzt geändert</value>
+  </data>
+  <data name="COLUMN_NEXT" xml:space="preserve">
+    <value>Nächste</value>
   </data>
   <data name="LABEL_AUTOMATIC_BACKUP" xml:space="preserve">
     <value>Automatische Sicherung:</value>
@@ -339,6 +351,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   </data>
   <data name="TITLE_NEW_BACKUP_COLLECTION" xml:space="preserve">
     <value>Neue Sicherung erstellen</value>
+  </data>
+  <data name="TITLE_OVERVIEW" xml:space="preserve">
+    <value>Myna Backup - Übersicht</value>
   </data>
   <data name="TITLE_RENAME_BACKUP_COLLECTION" xml:space="preserve">
     <value>Sicherung umbenennen</value>

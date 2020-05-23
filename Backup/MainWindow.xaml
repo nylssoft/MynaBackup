@@ -32,6 +32,7 @@
         <CommandBinding Command="local:CustomCommands.AddDestinationDirectory" CanExecute="Command_CanExecute" Executed="Command_Executed" />
         <CommandBinding Command="local:CustomCommands.RemoveDestinationDirectory" CanExecute="Command_CanExecute" Executed="Command_Executed" />
         <CommandBinding Command="local:CustomCommands.Backup" CanExecute="Command_CanExecute" Executed="Command_Executed" />
+        <CommandBinding Command="local:CustomCommands.ShowOverview" CanExecute="Command_CanExecute" Executed="Command_Executed" />
         <CommandBinding Command="local:CustomCommands.Refresh" CanExecute="Command_CanExecute" Executed="Command_Executed" />
         <CommandBinding Command="local:CustomCommands.Exit" CanExecute="Command_CanExecute" Executed="Command_Executed" />
         <CommandBinding Command="local:CustomCommands.About" CanExecute="Command_CanExecute" Executed="Command_Executed" />
@@ -96,6 +97,7 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{x:Static props:Resources.MENUITEM_VIEW}">
+                        <MenuItem Command="local:CustomCommands.ShowOverview"/>
                         <MenuItem Command="local:CustomCommands.Refresh"/>
                     </MenuItem>
                     <MenuItem Header="{x:Static props:Resources.MENUITEM_HELP}">
@@ -248,7 +250,7 @@
                                     <GridViewColumnHeader Tag="Name" Content="{x:Static props:Resources.COLUMN_DIRECTORY_PATH}" Click="ListViewDirectories_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
                             </GridViewColumn>
-                            <GridViewColumn Width="130">
+                            <GridViewColumn Width="150">
                                 <GridViewColumn.Header>
                                     <GridViewColumnHeader Tag="Started" Content="{x:Static props:Resources.COLUMN_BACKUP_STARTED}" Click="ListViewDirectories_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>
@@ -258,7 +260,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="130">
+                            <GridViewColumn Width="150">
                                 <GridViewColumn.Header>
                                     <GridViewColumnHeader Tag="Finished" Content="{x:Static props:Resources.COLUMN_BACKUP_FINISHED}" Click="ListViewDirectories_ColumnHeaderClick"/>
                                 </GridViewColumn.Header>

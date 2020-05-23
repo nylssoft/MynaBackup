@@ -1,5 +1,5 @@
 ﻿/*
-    Myna Bank
+    Myna Backup
     Copyright (C) 2020 Niels Stockfleth
 
     This program is free software: you can redistribute it and/or modify
