@@ -463,17 +463,17 @@ namespace Backup.Core
         private static void BackupToDestinationDirectory(
             SourceFile sf, string baseDir, DestinationDirectory dd, string dateFolder, CancellationToken cancellationToken)
         {
-            var lastWrittenTimeUtc = File.GetLastWriteTimeUtc(sf.PathName);
-            if (sf.ContentHash == null || lastWrittenTimeUtc != sf.LastWrittenTimeUtc)
+            try
             {
-                sf.ContentHash = HashCalculator.GetContentHash(sf.PathName);
-                sf.LastWrittenTimeUtc = lastWrittenTimeUtc;
-            }
-            var df = dd.DestinationFiles.SingleOrDefault(f => f.SourceFileId == sf.SourceFileId);
-            var createnew = df == null;
-            if (createnew || df.ContentHash != sf.ContentHash || !File.Exists(df.PathName))
-            {
-                try
+                var lastWrittenTimeUtc = File.GetLastWriteTimeUtc(sf.PathName);
+                if (sf.ContentHash == null || lastWrittenTimeUtc != sf.LastWrittenTimeUtc)
+                {
+                    sf.ContentHash = HashCalculator.GetContentHash(sf.PathName);
+                    sf.LastWrittenTimeUtc = lastWrittenTimeUtc;
+                }
+                var df = dd.DestinationFiles.SingleOrDefault(f => f.SourceFileId == sf.SourceFileId);
+                var createnew = df == null;
+                if (createnew || df.ContentHash != sf.ContentHash || !File.Exists(df.PathName))
                 {
                     string destPathName = CopyToDestinationFile(
                         dd.PathName, baseDir, dateFolder, sf.PathName, cancellationToken);
@@ -489,18 +489,18 @@ namespace Backup.Core
                     df.ContentHash = sf.ContentHash;
                     dd.Copied += 1;
                 }
-                catch (Exception ex)
+            }
+            catch (Exception ex)
+            {
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        throw;
-                    }
-                    dd.CopyFailures.Add(new CopyFailure
-                    {
-                        SourceFileId = sf.SourceFileId,
-                        ErrorMessage = ex.Message
-                    });
+                    throw;
                 }
+                dd.CopyFailures.Add(new CopyFailure
+                {
+                    SourceFileId = sf.SourceFileId,
+                    ErrorMessage = ex.Message
+                });
             }
         }
 
