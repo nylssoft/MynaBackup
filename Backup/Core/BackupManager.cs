@@ -241,6 +241,7 @@ namespace Backup.Core
 
         public static DateTime? Backup(string title, IProgress<double> progress, CancellationToken cancellationToken)
         {
+            progress?.Report(0.0);
             DateTime? nextBackup = null;
             using var dbContext = new BackupDbContext(dbOptions);
             string dateFolder = DateTime.Now.ToString(DATE_FOLDER_FOMRAT);
@@ -288,15 +289,15 @@ namespace Backup.Core
                 var usedSourceFileIds = new HashSet<long>();
                 foreach (var sf in col.SourceFiles)
                 {
-                    current++;
-                    double percent = total > 0 ? current * 100.0 / total : 0.0;
-                    progress?.Report(percent);
                     cancellationToken.ThrowIfCancellationRequested();
                     if (File.Exists(sf.PathName))
                     {
                         BackupToDestinationDirectory(sf, baseDir, dd, dateFolder, cancellationToken);
                         usedSourceFileIds.Add(sf.SourceFileId);
                     }
+                    current++;
+                    double percent = total > 0 ? current * 100.0 / total : 0.0;
+                    progress?.Report(percent);
                 }
                 MoveDestinationFilesToHistoryDirectory(dbContext, dd, dateFolder, usedSourceFileIds);
                 dd.Finished = DateTime.UtcNow;
@@ -307,6 +308,7 @@ namespace Backup.Core
                 nextBackup = col.Started.Value.AddMinutes(col.AutomaticBackup).ToLocalTime();
             }
             dbContext.SaveChanges();
+            progress?.Report(100.0);
             return nextBackup;
         }
 
@@ -410,7 +412,7 @@ namespace Backup.Core
 
         private static async Task CopyFileAsync(string sourcePath, string destinationPath, CancellationToken cancellationToken)
         {
-            using Stream source = File.Open(sourcePath, FileMode.Open);
+            using Stream source = File.Open(sourcePath, FileMode.Open, FileAccess.Read);
             using Stream destination = File.Create(destinationPath);
             await source.CopyToAsync(destination, cancellationToken);
         }
