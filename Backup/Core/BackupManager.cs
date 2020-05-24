@@ -73,6 +73,35 @@ namespace Backup.Core
             }
         }
 
+        public static List<BackupFailure> GetFailures(string title, string destinationDirectory)
+        {
+            var ret = new List<BackupFailure>();
+            using var dbContext = new BackupDbContext(dbOptions);
+            var col = dbContext.BackupCollections.SingleOrDefault(col => col.Title == title);
+            if (col != null)
+            {
+                var sourceFiles = dbContext.SourceFiles.Where(sf => sf.BackupCollectionId == col.BackupCollectionId);
+                var dd = dbContext.DestinationDirectories.SingleOrDefault(dd => dd.BackupCollectionId == col.BackupCollectionId && dd.PathName == destinationDirectory);
+                if (dd != null)
+                {
+                    dbContext.Entry(dd)
+                        .Collection(dd => dd.CopyFailures)
+                        .Load();
+                    foreach (var cf in dd.CopyFailures)
+                    {
+                        var bf = new BackupFailure { ErrorMessage = cf.ErrorMessage };
+                        var sf = sourceFiles.SingleOrDefault((sf) => sf.SourceFileId == cf.SourceFileId);
+                        if (sf != null)
+                        {
+                            bf.SourceFilePath = sf.PathName;
+                        }
+                        ret.Add(bf);
+                    }
+                }
+            }
+            return ret;
+        }
+
         public static BackupModel Get(string title)
         {
             using var dbContext = new BackupDbContext(dbOptions);

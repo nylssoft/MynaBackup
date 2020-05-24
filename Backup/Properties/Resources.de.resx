@@ -198,6 +198,9 @@
   <data name="COLUMN_DIRECTORY_PATH" xml:space="preserve">
     <value>Verzeichnispfad</value>
   </data>
+  <data name="COLUMN_ERROR_MESSAGE" xml:space="preserve">
+    <value>Fehlermeldung</value>
+  </data>
   <data name="COLUMN_FILEPATH" xml:space="preserve">
     <value>Dateipfad</value>
   </data>
@@ -212,6 +215,9 @@
   </data>
   <data name="COLUMN_NEXT" xml:space="preserve">
     <value>Nächste</value>
+  </data>
+  <data name="COLUMN_SOURCE_FILE_PATH" xml:space="preserve">
+    <value>Quelldateipfad</value>
   </data>
   <data name="LABEL_AUTOMATIC_BACKUP" xml:space="preserve">
     <value>Automatische Sicherung:</value>
@@ -360,6 +366,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   </data>
   <data name="TITLE_ADD_SOURCE_FILE" xml:space="preserve">
     <value>Quelldatei hinzufügen</value>
+  </data>
+  <data name="TITLE_FAILURES_0" xml:space="preserve">
+    <value>Myna Backup - Fehler für Sicherung '{0}'</value>
   </data>
   <data name="TITLE_NEW_BACKUP_COLLECTION" xml:space="preserve">
     <value>Neue Sicherung erstellen</value>

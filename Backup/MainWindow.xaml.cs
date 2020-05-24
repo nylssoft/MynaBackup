@@ -49,6 +49,10 @@ namespace Backup
 
         private readonly ObservableCollection<OverviewModel> overviews = new ObservableCollection<OverviewModel>();
 
+        private FailureWindow failureWindow = null;
+
+        private readonly ObservableCollection<FailureModel> failures = new ObservableCollection<FailureModel>();
+
         private bool IsTaskRunning { get; set; } = false;
 
         private bool IsIncludePatternChanged { get; set; } = false;
@@ -139,6 +143,41 @@ namespace Backup
             var viewlist = (CollectionView)CollectionViewSource.GetDefaultView(listViewDirectories.ItemsSource);
             viewlist.SortDescriptions.Clear();
             viewlist.SortDescriptions.Add(new SortDescription(sortBy, sortDestDirectoriesDecorator.Direction));
+        }
+
+        private async void ListViewDirectories_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var name = comboBox.SelectedItem as string;
+            if (IsTaskRunning || name == null) return;
+            try
+            {
+                IsTaskRunning = true;
+                var mousePosition = e.GetPosition(listViewDirectories);
+                var lvitem = listViewDirectories.GetItemAt(mousePosition);
+                if (lvitem != null)
+                {
+                    var destDirModel = lvitem.Content as DestDirModel;
+                    var backupFailures = await Task.Run(() => BackupManager.GetFailures(name, destDirModel.Name));
+                    failures.Clear();
+                    foreach (var bf in backupFailures)
+                    {
+                        failures.Add(new FailureModel { SourceFilePath = bf.SourceFilePath, ErrorMessage = bf.ErrorMessage });
+                    }
+                    if (failureWindow == null || failureWindow.IsClosed)
+                    {
+                        failureWindow = new FailureWindow(null, string.Format(Properties.Resources.TITLE_FAILURES_0, name), failures);
+                        failureWindow.Show();
+                    }
+                    failureWindow.Activate();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+            IsTaskRunning = false;
+            UpdateControls();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private async void ComboBoxBackupCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -329,6 +368,11 @@ namespace Backup
                 {
                     overviewWindow.Close();
                     overviewWindow = null;
+                }
+                if (failureWindow != null && !failureWindow.IsClosed)
+                {
+                    failureWindow.Close();
+                    failureWindow = null;
                 }
                 Properties.Settings.Default.Save();
             }

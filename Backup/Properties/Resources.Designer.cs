@@ -304,6 +304,15 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error message.
+        /// </summary>
+        public static string COLUMN_ERROR_MESSAGE {
+            get {
+                return ResourceManager.GetString("COLUMN_ERROR_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File path.
         /// </summary>
         public static string COLUMN_FILEPATH {
@@ -345,6 +354,15 @@ namespace Backup.Properties {
         public static string COLUMN_NEXT {
             get {
                 return ResourceManager.GetString("COLUMN_NEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source file path.
+        /// </summary>
+        public static string COLUMN_SOURCE_FILE_PATH {
+            get {
+                return ResourceManager.GetString("COLUMN_SOURCE_FILE_PATH", resourceCulture);
             }
         }
         
@@ -781,6 +799,15 @@ namespace Backup.Properties {
         public static string TITLE_ADD_SOURCE_FILE {
             get {
                 return ResourceManager.GetString("TITLE_ADD_SOURCE_FILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Myna Backup - Failures for backup &apos;{0}&apos;.
+        /// </summary>
+        public static string TITLE_FAILURES_0 {
+            get {
+                return ResourceManager.GetString("TITLE_FAILURES_0", resourceCulture);
             }
         }
         

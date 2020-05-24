@@ -198,6 +198,9 @@
   <data name="COLUMN_DIRECTORY_PATH" xml:space="preserve">
     <value>Directory path</value>
   </data>
+  <data name="COLUMN_ERROR_MESSAGE" xml:space="preserve">
+    <value>Error message</value>
+  </data>
   <data name="COLUMN_FILEPATH" xml:space="preserve">
     <value>File path</value>
   </data>
@@ -212,6 +215,9 @@
   </data>
   <data name="COLUMN_NEXT" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="COLUMN_SOURCE_FILE_PATH" xml:space="preserve">
+    <value>Source file path</value>
   </data>
   <data name="LABEL_AUTOMATIC_BACKUP" xml:space="preserve">
     <value>Automatic backup:</value>
@@ -360,6 +366,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   </data>
   <data name="TITLE_ADD_SOURCE_FILE" xml:space="preserve">
     <value>Add source file</value>
+  </data>
+  <data name="TITLE_FAILURES_0" xml:space="preserve">
+    <value>Myna Backup - Failures for backup '{0}'</value>
   </data>
   <data name="TITLE_NEW_BACKUP_COLLECTION" xml:space="preserve">
     <value>Create new backup</value>
