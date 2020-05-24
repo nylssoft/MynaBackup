@@ -37,6 +37,9 @@ namespace Backup.Migrations
                     b.Property<string>("IncludePattern")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("SourceDirectory")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("Started")
                         .HasColumnType("TEXT");
 

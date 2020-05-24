@@ -26,6 +26,8 @@ namespace Backup.Core.Impl
 
         public string Title { get; set; }
 
+        public string SourceDirectory { get; set; } = "";
+
         public List<SourceFile> SourceFiles { get; set; } = new List<SourceFile>();
 
         public List<DestinationDirectory> DestinationDirectories { get; set; } = new List<DestinationDirectory>();

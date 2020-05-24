@@ -126,8 +126,14 @@
   <data name="BUTTON_CANCEL" xml:space="preserve">
     <value>_Abbrechen</value>
   </data>
+  <data name="BUTTON_CLEAR" xml:space="preserve">
+    <value>Zurücksetze_n</value>
+  </data>
   <data name="BUTTON_OK" xml:space="preserve">
     <value>_OK</value>
+  </data>
+  <data name="BUTTON_SELECT" xml:space="preserve">
+    <value>Aus_wählen...</value>
   </data>
   <data name="CMD_ABOUT" xml:space="preserve">
     <value>_Über</value>
@@ -240,6 +246,9 @@
   <data name="LABEL_NEXT_BACKUP_AT" xml:space="preserve">
     <value>Nächste Sicherung am:</value>
   </data>
+  <data name="LABEL_SOURCE_DIRECTORY" xml:space="preserve">
+    <value>Quellverzeichnis:</value>
+  </data>
   <data name="LABEL_SOURCE_FILES" xml:space="preserve">
     <value>_Quelldateien:</value>
   </data>
@@ -340,6 +349,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   <data name="TEXT_SOURCE_FILE_SELECTED_0_1_2" xml:space="preserve">
     <value>{0} Quelldatei von {1} ausgewählt. Insgesamt {2}.</value>
   </data>
+  <data name="TEXT_UPDATE_SOURCE_FILES_FROM_DIRECTORY" xml:space="preserve">
+    <value>Quelldateien im Quellverzeichnis werden aktualisiert...</value>
+  </data>
   <data name="TITLE_ADD_DESTINATION_DIRECTORY" xml:space="preserve">
     <value>Zielverzeichnis hinzufügen</value>
   </data>
@@ -357,6 +369,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   </data>
   <data name="TITLE_RENAME_BACKUP_COLLECTION" xml:space="preserve">
     <value>Sicherung umbenennen</value>
+  </data>
+  <data name="TITLE_SELECT_SOURCE_DIRECTORY" xml:space="preserve">
+    <value>Quellverzeichnis auswählen</value>
   </data>
   <data name="TITLE_SETTINGS" xml:space="preserve">
     <value>Einstellungen</value>

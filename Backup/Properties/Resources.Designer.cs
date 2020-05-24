@@ -88,11 +88,29 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Clear.
+        /// </summary>
+        public static string BUTTON_CLEAR {
+            get {
+                return ResourceManager.GetString("BUTTON_CLEAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _OK.
         /// </summary>
         public static string BUTTON_OK {
             get {
                 return ResourceManager.GetString("BUTTON_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se_lect....
+        /// </summary>
+        public static string BUTTON_SELECT {
+            get {
+                return ResourceManager.GetString("BUTTON_SELECT", resourceCulture);
             }
         }
         
@@ -430,6 +448,15 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Source directory:.
+        /// </summary>
+        public static string LABEL_SOURCE_DIRECTORY {
+            get {
+                return ResourceManager.GetString("LABEL_SOURCE_DIRECTORY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Source files:.
         /// </summary>
         public static string LABEL_SOURCE_FILES {
@@ -722,6 +749,15 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updating source files from source directory....
+        /// </summary>
+        public static string TEXT_UPDATE_SOURCE_FILES_FROM_DIRECTORY {
+            get {
+                return ResourceManager.GetString("TEXT_UPDATE_SOURCE_FILES_FROM_DIRECTORY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add destination directory.
         /// </summary>
         public static string TITLE_ADD_DESTINATION_DIRECTORY {
@@ -772,6 +808,15 @@ namespace Backup.Properties {
         public static string TITLE_RENAME_BACKUP_COLLECTION {
             get {
                 return ResourceManager.GetString("TITLE_RENAME_BACKUP_COLLECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select source directory.
+        /// </summary>
+        public static string TITLE_SELECT_SOURCE_DIRECTORY {
+            get {
+                return ResourceManager.GetString("TITLE_SELECT_SOURCE_DIRECTORY", resourceCulture);
             }
         }
         

@@ -85,6 +85,8 @@ namespace Backup
                     CommandManager.InvalidateRequerySuggested();
                     try
                     {
+                        var model = await Task.Run(() => BackupManager.Get(collectionName));
+                        await UpdateSourceFilesFromSourceDirectory(model);
                         cts = new CancellationTokenSource();
                         var progress = new Progress<double>((percent) => UpdateProgress(percent));
                         next = await Task.Run(() => BackupManager.Backup(collectionName, progress, cts.Token));
@@ -148,7 +150,7 @@ namespace Backup
                     Properties.Settings.Default.LastUsedBackup = comboBox.SelectedIndex;
                 }
                 var name = comboBox.SelectedItem as string;
-                await InitBackupCollection(name);
+                await InitBackupCollection(name, true);
                 if (!sortSourceFilesDecorator.HasAdorner)
                 {
                     var viewlist = (CollectionView)CollectionViewSource.GetDefaultView(listViewSourceFiles.ItemsSource);
@@ -221,13 +223,15 @@ namespace Backup
                     break;
                 case "DeleteBackupCollection":
                 case "RenameBackupCollection":
-                case "AddSourceFile":
-                case "AddSourceDirectory":
                 case "AddDestinationDirectory":
                     e.CanExecute = name != null && !IsTaskRunning;
                     break;
+                case "AddSourceFile":
+                case "AddSourceDirectory":
+                    e.CanExecute = name != null && !IsTaskRunning && textBlockSourceDirectory.Text.Length == 0;
+                    break;
                 case "RemoveSourceFile":
-                    e.CanExecute = name != null && !IsTaskRunning && listViewSourceFiles.SelectedItem != null;
+                    e.CanExecute = name != null && !IsTaskRunning && listViewSourceFiles.SelectedItem != null && textBlockSourceDirectory.Text.Length == 0;
                     break;
                 case "RemoveDestinationDirectory":
                     e.CanExecute = name != null && !IsTaskRunning && listViewDirectories.SelectedItem != null;
@@ -401,6 +405,63 @@ namespace Backup
             UpdateControls();
         }
 
+        private async void ButtonClearSourceDirectory_Click(object sender, RoutedEventArgs e)
+        {
+            var name = comboBox.SelectedItem as string;
+            if (IsTaskRunning || name == null) return;
+            try
+            {
+                IsTaskRunning = true;
+                SetProgress(Properties.Resources.TEXT_UPDATE_SOURCE_FILES_FROM_DIRECTORY);
+                UpdateControls();
+                var model = await Task.Run(() => BackupManager.Get(name));
+                model.SourceDirectory = "";
+                model.SourceFiles.Clear();
+                await Task.Run(() => BackupManager.Update(model));
+                await InitBackupCollection(name);
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+            SetProgress();
+            IsTaskRunning = false;
+            CommandManager.InvalidateRequerySuggested();
+            UpdateControls();
+        }
+
+        private async void ButtonSelectSourceDirectory_Click(object sender, RoutedEventArgs e)
+        {
+            var name = comboBox.SelectedItem as string;
+            if (IsTaskRunning || name == null) return;
+            try
+            {
+                var dlg = new System.Windows.Forms.FolderBrowserDialog
+                {
+                    UseDescriptionForTitle = true,
+                    Description = Properties.Resources.TITLE_SELECT_SOURCE_DIRECTORY
+                };
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    IsTaskRunning = true;
+                    SetProgress(Properties.Resources.TEXT_UPDATE_SOURCE_FILES_FROM_DIRECTORY);
+                    UpdateControls();
+                    var model = await Task.Run(() => BackupManager.Get(name));
+                    model.SourceDirectory = dlg.SelectedPath;
+                    await Task.Run(() => BackupManager.Update(model));
+                    await InitBackupCollection(name, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+            SetProgress();
+            IsTaskRunning = false;
+            CommandManager.InvalidateRequerySuggested();
+            UpdateControls();
+        }
+
         private void ButtonCancelProgress_Click(object sender, RoutedEventArgs e)
         {
             cts?.Cancel();
@@ -477,6 +538,8 @@ namespace Backup
             textBoxExcludePattern.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null;
             buttonApplyIncludePattern.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && IsIncludePatternChanged;
             buttonApplyExcludePattern.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && IsExcludePatternChanged;
+            buttonClearSourceDirectory.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && textBlockSourceDirectory.Text.Length > 0;
+            buttonSelectSourceDirectory.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && listViewSourceFiles.Items.Count == 0;
             long totalFileSize = 0;
             if (listViewSourceFiles.SelectedItems.Count > 0)
             {
@@ -547,7 +610,7 @@ namespace Backup
             }
         }
 
-        private async Task InitBackupCollection(string name)
+        private async Task InitBackupCollection(string name, bool updateSourceFiles = false)
         {
             listViewSourceFiles.ItemsSource = null;
             listViewDirectories.ItemsSource = null;
@@ -564,10 +627,16 @@ namespace Backup
                 labelBackupNextStart.Content = "-";
                 textBoxExcludePattern.Text = "";
                 textBoxIncludePattern.Text = "";
+                textBlockSourceDirectory.Text = "";
                 UpdateControls();
                 if (name != null)
                 {
                     var model = await Task.Run(() => BackupManager.Get(name));
+                    if (updateSourceFiles)
+                    {
+                        SetProgress(Properties.Resources.TEXT_UPDATE_SOURCE_FILES_FROM_DIRECTORY);
+                        await UpdateSourceFilesFromSourceDirectory(model);
+                    }
                     if (model.Started != null)
                     {
                         labelBackupStarted.Content = model.Started.Value.ToString();
@@ -592,6 +661,7 @@ namespace Backup
                     {
                         radioButtonDay.IsChecked = true;
                     }
+                    textBlockSourceDirectory.Text = model.SourceDirectory;
                     if (model.ExcludePattern != null)
                     {
                         textBoxExcludePattern.Text = model.ExcludePattern;
@@ -801,6 +871,36 @@ namespace Backup
             return $"{f:F2} GB";
         }
 
+        private async Task UpdateSourceFilesFromSourceDirectory(BackupModel model)
+        {
+            if (!string.IsNullOrEmpty(model.SourceDirectory))
+            {
+                model.SourceFiles.Clear();
+                Regex regexInclude = null;
+                if (!string.IsNullOrEmpty(model.IncludePattern))
+                {
+                    regexInclude = new Regex(model.IncludePattern, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+                }
+                Regex regexExclude = null;
+                if (!string.IsNullOrEmpty(model.ExcludePattern))
+                {
+                    regexExclude = new Regex(model.ExcludePattern, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+                }
+                var ret = await Task.Run(() => new DirectoryInfo(model.SourceDirectory).GetAllFiles(null));
+                foreach (var f in ret)
+                {
+                    if (regexExclude != null && regexExclude.IsMatch(f.Item1) ||
+                        regexInclude != null && !regexInclude.IsMatch(f.Item1))
+                    {
+                        continue;
+                    }
+                    var sfmodel = new SourceFileModel { Name = f.Item1, Size = f.Item2, ModifiedDate = f.Item3 };
+                    model.SourceFiles.Add(sfmodel.Name);
+                }
+                BackupManager.Update(model);
+            }
+        }
+
         // --- commands
 
         private void ChangeSettingsCmd()
@@ -901,8 +1001,20 @@ namespace Backup
 
         private async void RefreshCmd()
         {
-            if (IsTaskRunning) return;
-            await InitBackupCollection(comboBox.SelectedItem as string);
+            var name = comboBox.SelectedItem as string;
+            if (IsTaskRunning || name == null) return;
+            try
+            {
+                await InitBackupCollection(name, true);
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+            SetProgress();
+            IsTaskRunning = false;
+            CommandManager.InvalidateRequerySuggested();
+            UpdateControls();
         }
 
         private async void BackupCmd()
@@ -911,11 +1023,17 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
-                SetProgress(Properties.Resources.TEXT_RUN_BACKUP_COLLECTION);
                 UpdateControls();
                 string name = comboBox.SelectedItem as string;
                 if (name != null)
                 {
+                    if (textBlockSourceDirectory.Text.Length > 0)
+                    {
+                        SetProgress(Properties.Resources.TEXT_UPDATE_SOURCE_FILES_FROM_DIRECTORY);
+                        var model = await Task.Run(() => BackupManager.Get(name));
+                        await UpdateSourceFilesFromSourceDirectory(model);
+                    }
+                    SetProgress(Properties.Resources.TEXT_RUN_BACKUP_COLLECTION);
                     cts = new CancellationTokenSource();
                     var progress = new Progress<double>((percent) => UpdateProgress(percent));
                     var next = await Task.Run( () => BackupManager.Backup(name, progress, cts.Token));
@@ -1185,6 +1303,5 @@ namespace Backup
             CommandManager.InvalidateRequerySuggested();
             UpdateControls();
         }
-
     }
 }

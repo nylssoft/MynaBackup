@@ -143,6 +143,7 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="70*"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30*"/>
@@ -176,8 +177,19 @@
                     <RadioButton x:Name="radioButtonHour" Content="{x:Static props:Resources.OPTION_HOURLY}" Margin="5,0,5,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
                     <RadioButton x:Name="radioButtonDay" Content="{x:Static props:Resources.OPTION_DAILY}" Margin="5,0,0,0" VerticalAlignment="Center" Checked="RadioButtonAutomaticBackup_Checked" />
                 </StackPanel>
-                <Label Grid.Row="2" Grid.Column="0" Content="{x:Static props:Resources.LABEL_INCLUDE_PATTERN}" Target="{Binding ElementName=textBoxIncludePattern}"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="{x:Static props:Resources.LABEL_SOURCE_DIRECTORY}" />
                 <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="textBlockSourceDirectory" Grid.Column="0" Height="21" />
+                    <Button x:Name="buttonClearSourceDirectory" Grid.Column="1" Height="23" Content="{x:Static props:Resources.BUTTON_CLEAR}" Margin="10,0,0,0" Click="ButtonClearSourceDirectory_Click" />
+                    <Button x:Name="buttonSelectSourceDirectory" Grid.Column="2" Height="23" Content="{x:Static props:Resources.BUTTON_SELECT}" Margin="10,0,0,0" Click="ButtonSelectSourceDirectory_Click" />
+                </Grid>
+                <Label Grid.Row="3" Grid.Column="0" Content="{x:Static props:Resources.LABEL_INCLUDE_PATTERN}" Target="{Binding ElementName=textBoxIncludePattern}"/>
+                <Grid Grid.Row="3" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="100" />
@@ -185,8 +197,8 @@
                     <TextBox Grid.Column="0" x:Name="textBoxIncludePattern" Height="23" TextChanged="TextBoxIncludePattern_TextChanged" />
                     <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyIncludePattern" Height="23" Content="{x:Static props:Resources.BUTTON_APPLY_INCLUDEPATTERN}" Click="ButtonApplyIncludePattern_Click" />
                 </Grid>
-                <Label Grid.Row="3" Grid.Column="0" Content="{x:Static props:Resources.LABEL_EXCLUDE_PATTERN}" Target="{Binding ElementName=textBoxExcludePattern}"/>
-                <Grid Grid.Row="3" Grid.Column="1">
+                <Label Grid.Row="4" Grid.Column="0" Content="{x:Static props:Resources.LABEL_EXCLUDE_PATTERN}" Target="{Binding ElementName=textBoxExcludePattern}"/>
+                <Grid Grid.Row="4" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="100" />
@@ -194,8 +206,8 @@
                     <TextBox Grid.Column="0" x:Name="textBoxExcludePattern" Height="23" TextChanged="TextBoxExcludePattern_TextChanged" />
                     <Button Grid.Column="1" Margin="10,0,0,0" x:Name="buttonApplyExcludePattern" Height="23" Content="{x:Static props:Resources.BUTTON_APPLY_EXCLUDEPATTERN}" Click="ButtonApplyExcludePattern_Click" />
                 </Grid>
-                <Label Grid.Row="4" Grid.Column="0" Content="{x:Static props:Resources.LABEL_SOURCE_FILES}" Target="{Binding ElementName=listViewSourceFiles}"/>
-                <ListView Grid.Row="4" Grid.Column="1" x:Name="listViewSourceFiles" SelectionChanged="ListView_SelectionChanged">
+                <Label Grid.Row="5" Grid.Column="0" Content="{x:Static props:Resources.LABEL_SOURCE_FILES}" Target="{Binding ElementName=listViewSourceFiles}"/>
+                <ListView Grid.Row="5" Grid.Column="1" x:Name="listViewSourceFiles" SelectionChanged="ListView_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -235,9 +247,9 @@
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>
-                <Label Grid.Row="5" Grid.Column="1" x:Name="labelSourceFilesInfo" />
-                <Label Grid.Row="6" Grid.Column="0" Content="{x:Static props:Resources.LABEL_DESTINATION_DIRECTORIES}" Target="{Binding ElementName=listViewDirectories}"/>
-                <ListView Grid.Row="6" Grid.Column="1" x:Name="listViewDirectories" SelectionChanged="ListView_SelectionChanged">
+                <Label Grid.Row="6" Grid.Column="1" x:Name="labelSourceFilesInfo" />
+                <Label Grid.Row="7" Grid.Column="0" Content="{x:Static props:Resources.LABEL_DESTINATION_DIRECTORIES}" Target="{Binding ElementName=listViewDirectories}"/>
+                <ListView Grid.Row="7" Grid.Column="1" x:Name="listViewDirectories" SelectionChanged="ListView_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -292,8 +304,8 @@
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>
-                <Label Grid.Row="7" Grid.Column="1" Name="labelDirectoriesInfo" />
-                <StatusBar Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}">
+                <Label Grid.Row="8" Grid.Column="1" Name="labelDirectoriesInfo" />
+                <StatusBar Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}">
                     <StatusBarItem>
                         <TextBlock Name="textBlockProgress" />
                     </StatusBarItem>

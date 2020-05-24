@@ -82,6 +82,7 @@ namespace Backup.Core
                 return null;
             }
             var model = new BackupModel { Id = col.BackupCollectionId, Title = col.Title };
+            model.SourceDirectory = col.SourceDirectory;
             model.Started = col.Started?.ToLocalTime();
             model.Finished = col.Finished?.ToLocalTime();
             model.AutomaticBackup = col.AutomaticBackup;
@@ -114,14 +115,6 @@ namespace Backup.Core
         {
             using var dbContext = new BackupDbContext(dbOptions);
             var col = new BackupCollection { Title = model.Title };
-            foreach (var fname in model.SourceFiles)
-            {
-                col.SourceFiles.Add(new SourceFile { PathName = fname });
-            }
-            foreach (var dname in model.DestinationDirectories)
-            {
-                col.DestinationDirectories.Add(new DestinationDirectory { PathName = dname });
-            }
             dbContext.BackupCollections.Add(col);
             dbContext.SaveChanges();
             model.Id = col.BackupCollectionId;
@@ -136,6 +129,7 @@ namespace Backup.Core
             if (col == null) throw new ArgumentException($"Backup collection with ID {model.Id} not found.");
             col.Title = model.Title;
             col.AutomaticBackup = model.AutomaticBackup;
+            col.SourceDirectory = model.SourceDirectory;
             col.IncludePattern = model.IncludePattern;
             col.ExcludePattern = model.ExcludePattern;
             dbContext.Entry(col)
