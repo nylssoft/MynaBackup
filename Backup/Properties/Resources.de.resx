@@ -127,13 +127,13 @@
     <value>_Abbrechen</value>
   </data>
   <data name="BUTTON_CLEAR" xml:space="preserve">
-    <value>Zurücksetze_n</value>
+    <value>Zu_rücksetzen</value>
   </data>
   <data name="BUTTON_OK" xml:space="preserve">
     <value>_OK</value>
   </data>
   <data name="BUTTON_SELECT" xml:space="preserve">
-    <value>Aus_wählen...</value>
+    <value>Auswäh_len...</value>
   </data>
   <data name="CMD_ABOUT" xml:space="preserve">
     <value>_Über</value>

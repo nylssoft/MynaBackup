@@ -44,7 +44,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Menu Grid.Row="0">
+                <Menu Grid.Row="0" KeyboardNavigation.TabIndex="1">
                     <MenuItem Header="{x:Static props:Resources.MENUITEM_FILE}">
                         <MenuItem Command="local:CustomCommands.CreateBackupCollection">
                             <MenuItem.Icon>
@@ -109,29 +109,29 @@
                     </MenuItem>
                 </Menu>
                 <ToolBarTray Grid.Row="1">
-                    <ToolBar>
+                    <ToolBar KeyboardNavigation.TabNavigation="Continue">
                         <Label Margin="0,5,0,5" Content="{x:Static props:Resources.LABEL_BACKUP_COLLECTION}" Target="{Binding ElementName=comboBox}"/>
-                        <ComboBox x:Name="comboBox" MinWidth="100" Margin="0,3,0,3" HorizontalAlignment="Left" SelectionChanged="ComboBoxBackupCollection_SelectionChanged"/>
+                        <ComboBox x:Name="comboBox" MinWidth="100" Margin="0,3,0,3" HorizontalAlignment="Left" SelectionChanged="ComboBoxBackupCollection_SelectionChanged" KeyboardNavigation.TabIndex="2"/>
                     </ToolBar>
-                    <ToolBar>
-                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_SOURCE_FILE}" Command="local:CustomCommands.AddSourceFile">
+                    <ToolBar KeyboardNavigation.TabNavigation="Continue">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_SOURCE_FILE}" Command="local:CustomCommands.AddSourceFile" KeyboardNavigation.TabIndex="3">
                             <Image Source="Images/32x32/list-add-4.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
-                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_SOURCE_DIRECTORY}" Command="local:CustomCommands.AddSourceDirectory">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_SOURCE_DIRECTORY}" Command="local:CustomCommands.AddSourceDirectory" KeyboardNavigation.TabIndex="4">
                             <Image Source="Images/32x32/folder-new-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
-                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_REMOVE_SOURCE_FILE}" Command="local:CustomCommands.RemoveSourceFile">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_REMOVE_SOURCE_FILE}" Command="local:CustomCommands.RemoveSourceFile" KeyboardNavigation.TabIndex="5">
                             <Image Source="Images/32x32/list-remove-4.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_DESTINATION_DIRECTORY}" Command="local:CustomCommands.AddDestinationDirectory">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_ADD_DESTINATION_DIRECTORY}" Command="local:CustomCommands.AddDestinationDirectory" KeyboardNavigation.TabIndex="6">
                             <Image Source="Images/32x32/network-connect-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
-                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_REMOVE_DESTINATION_DIRECTORY}" Command="local:CustomCommands.RemoveDestinationDirectory">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_REMOVE_DESTINATION_DIRECTORY}" Command="local:CustomCommands.RemoveDestinationDirectory" KeyboardNavigation.TabIndex="7">
                             <Image Source="Images/32x32/network-disconnect-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_BACKUP}" Command="local:CustomCommands.Backup">
+                        <Button ToolTip="{x:Static props:Resources.TOOLTIP_BACKUP}" Command="local:CustomCommands.Backup" KeyboardNavigation.TabIndex="8">
                             <Image Source="Images/32x32/media-optical-copy-2.png" Style="{StaticResource ImageEnabled}" Width="32" Height="32"/>
                         </Button>
                     </ToolBar>
