@@ -30,7 +30,7 @@ namespace Backup
 
         public bool IsClosed { get; set; } = false;
 
-        public FailureWindow(Window owner, string title, ObservableCollection<FailureModel> failures)
+        public FailureWindow(Window owner, string title, string collectionName, string destinationDirectory, ObservableCollection<FailureModel> failures)
         {
             InitializeComponent();
             Owner = owner;
@@ -38,6 +38,8 @@ namespace Backup
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             IsClosed = false;
             listViewFailures.ItemsSource = failures;
+            textBlockBackup.Text = collectionName;
+            textBlockDestinationDirectory.Text = destinationDirectory;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -63,5 +65,11 @@ namespace Backup
             viewlist.SortDescriptions.Clear();
             viewlist.SortDescriptions.Add(new SortDescription(sortBy, sortDecorator.Direction));
         }
+
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
     }
 }

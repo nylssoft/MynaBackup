@@ -385,11 +385,29 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy errors:.
+        /// </summary>
+        public static string LABEL_COPY_ERRORS {
+            get {
+                return ResourceManager.GetString("LABEL_COPY_ERRORS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Des_tination directories:.
         /// </summary>
         public static string LABEL_DESTINATION_DIRECTORIES {
             get {
                 return ResourceManager.GetString("LABEL_DESTINATION_DIRECTORIES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination directory:.
+        /// </summary>
+        public static string LABEL_DESTINATION_DIRECTORY {
+            get {
+                return ResourceManager.GetString("LABEL_DESTINATION_DIRECTORY", resourceCulture);
             }
         }
         
@@ -695,6 +713,15 @@ namespace Backup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading copy errors....
+        /// </summary>
+        public static string TEXT_LOADING_COPY_ERRORS {
+            get {
+                return ResourceManager.GetString("TEXT_LOADING_COPY_ERRORS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Removing destination directory....
         /// </summary>
         public static string TEXT_REMOVE_DESTINATION_DIRECTORY {
@@ -803,11 +830,11 @@ namespace Backup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Myna Backup - Failures for backup &apos;{0}&apos;.
+        ///   Looks up a localized string similar to Myna Backup - Copy Errors.
         /// </summary>
-        public static string TITLE_FAILURES_0 {
+        public static string TITLE_COPY_ERRORS {
             get {
-                return ResourceManager.GetString("TITLE_FAILURES_0", resourceCulture);
+                return ResourceManager.GetString("TITLE_COPY_ERRORS", resourceCulture);
             }
         }
         

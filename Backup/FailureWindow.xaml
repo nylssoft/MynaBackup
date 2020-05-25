@@ -8,9 +8,26 @@
         Loaded="Window_Loaded" Closed="Window_Closed"
         Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
         Icon="Images/logo.png"
-        Height="300" Width="1024">
+        MinWidth="300" MinHeight="300"
+        Height="500" Width="1000">
     <Grid Margin="5,5,5,5">
-        <ListView x:Name="listViewFailures">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="{x:Static props:Resources.LABEL_BACKUP_COLLECTION}" VerticalAlignment="Center"/>
+        <TextBlock x:Name="textBlockBackup" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" />
+        <Label Grid.Row="1" Grid.Column="0" Content="{x:Static props:Resources.LABEL_DESTINATION_DIRECTORY}" VerticalAlignment="Center"/>
+        <TextBlock x:Name="textBlockDestinationDirectory" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="{x:Static props:Resources.LABEL_COPY_ERRORS}" />
+        <ListView Grid.Row="2" Grid.Column="1" x:Name="listViewFailures">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -29,7 +46,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="570">
+                    <GridViewColumn Width="400">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="ErrorMessage" Content="{x:Static props:Resources.COLUMN_ERROR_MESSAGE}" Click="ListViewFailures_ColumnHeaderClick"/>
                         </GridViewColumn.Header>
@@ -42,5 +59,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" IsCancel="True" IsDefault="True" Content="{x:Static props:Resources.CMD_CLOSE}" Height="23" Width="80" Margin="5,0,5,0" Click="ButtonCancel_Click" HorizontalAlignment="Right"/>
     </Grid>
 </Window>

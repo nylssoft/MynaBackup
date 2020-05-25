@@ -225,8 +225,14 @@
   <data name="LABEL_BACKUP_COLLECTION" xml:space="preserve">
     <value>_Sicherung:</value>
   </data>
+  <data name="LABEL_COPY_ERRORS" xml:space="preserve">
+    <value>Kopierfehler:</value>
+  </data>
   <data name="LABEL_DESTINATION_DIRECTORIES" xml:space="preserve">
     <value>_Zielverzeichnisse:</value>
+  </data>
+  <data name="LABEL_DESTINATION_DIRECTORY" xml:space="preserve">
+    <value>Zielverzeichnis:</value>
   </data>
   <data name="LABEL_EXCLUDE_PATTERN" xml:space="preserve">
     <value>Ex_kludierungs-Muster:</value>
@@ -328,6 +334,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   <data name="TEXT_FILTERING_SOURCE_FILES" xml:space="preserve">
     <value>Muster werden auf die Quelldateien angewandt...</value>
   </data>
+  <data name="TEXT_LOADING_COPY_ERRORS" xml:space="preserve">
+    <value>Kopierfehler werden geladen...</value>
+  </data>
   <data name="TEXT_LOAD_BACKUP_COLLECTION" xml:space="preserve">
     <value>Sicherung wird geladen...</value>
   </data>
@@ -367,8 +376,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   <data name="TITLE_ADD_SOURCE_FILE" xml:space="preserve">
     <value>Quelldatei hinzufügen</value>
   </data>
-  <data name="TITLE_FAILURES_0" xml:space="preserve">
-    <value>Myna Backup - Fehler für Sicherung '{0}'</value>
+  <data name="TITLE_COPY_ERRORS" xml:space="preserve">
+    <value>Myna Backup - Kopierfehler</value>
   </data>
   <data name="TITLE_NEW_BACKUP_COLLECTION" xml:space="preserve">
     <value>Neue Sicherung erstellen</value>

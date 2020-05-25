@@ -152,6 +152,8 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
+                SetProgress(Properties.Resources.TEXT_LOADING_COPY_ERRORS);
+                UpdateControls();
                 var mousePosition = e.GetPosition(listViewDirectories);
                 var lvitem = listViewDirectories.GetItemAt(mousePosition);
                 if (lvitem != null)
@@ -165,10 +167,19 @@ namespace Backup
                     }
                     if (failureWindow == null || failureWindow.IsClosed)
                     {
-                        failureWindow = new FailureWindow(null, string.Format(Properties.Resources.TITLE_FAILURES_0, name), failures);
+                        failureWindow = new FailureWindow(null,
+                            Properties.Resources.TITLE_COPY_ERRORS,
+                            name,
+                            destDirModel.Name,
+                            failures);
                         failureWindow.Show();
                     }
-                    failureWindow.Activate();
+                    else
+                    {
+                        failureWindow.textBlockBackup.Text = name;
+                        failureWindow.textBlockDestinationDirectory.Text = destDirModel.Name;
+                        failureWindow.Activate();
+                    }
                 }
             }
             catch (Exception ex)
@@ -176,6 +187,7 @@ namespace Backup
                 HandleError(ex);
             }
             IsTaskRunning = false;
+            SetProgress();
             UpdateControls();
             CommandManager.InvalidateRequerySuggested();
         }

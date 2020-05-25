@@ -307,6 +307,10 @@ namespace Backup.Core
                 dbContext.Entry(dd)
                     .Collection(dd => dd.CopyFailures)
                     .Load();
+                foreach (var cf in dd.CopyFailures)
+                {
+                    dbContext.CopyFailures.Remove(cf);
+                }
                 dd.Started = DateTime.UtcNow;
                 dd.Copied = 0;
                 dd.CopyFailures.Clear();
