@@ -84,6 +84,7 @@ namespace Backup
                 if (diff.TotalSeconds > 0)
                 {
                     IsTaskRunning = true;
+                    cts = new CancellationTokenSource();
                     SetProgress(string.Format(Properties.Resources.TEXT_AUTOMATIC_BACKUP_0, collectionName));
                     UpdateControls();
                     CommandManager.InvalidateRequerySuggested();
@@ -91,7 +92,6 @@ namespace Backup
                     {
                         var model = await Task.Run(() => BackupManager.Get(collectionName));
                         await UpdateSourceFilesFromSourceDirectory(model);
-                        cts = new CancellationTokenSource();
                         var progress = new Progress<double>((percent) => UpdateProgress(percent));
                         next = await Task.Run(() => BackupManager.Backup(collectionName, progress, cts.Token));
                         nextBackupMapping[collectionName] = next;
@@ -509,6 +509,7 @@ namespace Backup
         private void ButtonCancelProgress_Click(object sender, RoutedEventArgs e)
         {
             cts?.Cancel();
+            UpdateControls();
         }
 
         // --- helper methods
@@ -584,6 +585,7 @@ namespace Backup
             buttonApplyExcludePattern.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && IsExcludePatternChanged;
             buttonClearSourceDirectory.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && textBlockSourceDirectory.Text.Length > 0;
             buttonSelectSourceDirectory.IsEnabled = !IsTaskRunning && comboBox.SelectedItem != null && listViewSourceFiles.Items.Count == 0;
+            buttonCancelProgress.IsEnabled = IsTaskRunning && cts != null && !cts.IsCancellationRequested;
             long totalFileSize = 0;
             if (listViewSourceFiles.SelectedItems.Count > 0)
             {
@@ -1067,6 +1069,7 @@ namespace Backup
             try
             {
                 IsTaskRunning = true;
+                cts = new CancellationTokenSource();
                 UpdateControls();
                 string name = comboBox.SelectedItem as string;
                 if (name != null)
@@ -1078,7 +1081,6 @@ namespace Backup
                         await UpdateSourceFilesFromSourceDirectory(model);
                     }
                     SetProgress(Properties.Resources.TEXT_RUN_BACKUP_COLLECTION);
-                    cts = new CancellationTokenSource();
                     var progress = new Progress<double>((percent) => UpdateProgress(percent));
                     var next = await Task.Run( () => BackupManager.Backup(name, progress, cts.Token));
                     nextBackupMapping[name] = next;

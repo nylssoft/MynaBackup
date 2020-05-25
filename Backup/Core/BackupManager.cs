@@ -80,22 +80,22 @@ namespace Backup.Core
             var col = dbContext.BackupCollections.SingleOrDefault(col => col.Title == title);
             if (col != null)
             {
-                var sourceFiles = dbContext.SourceFiles.Where(sf => sf.BackupCollectionId == col.BackupCollectionId);
+                dbContext.Entry(col)
+                    .Collection(col => col.SourceFiles)
+                    .Load();
                 var dd = dbContext.DestinationDirectories.SingleOrDefault(dd => dd.BackupCollectionId == col.BackupCollectionId && dd.PathName == destinationDirectory);
                 if (dd != null)
                 {
                     dbContext.Entry(dd)
                         .Collection(dd => dd.CopyFailures)
                         .Load();
-                    foreach (var cf in dd.CopyFailures)
+                    var query = from sf in col.SourceFiles
+                                join cf in dd.CopyFailures
+                                    on sf.SourceFileId equals cf.SourceFileId
+                                select new { sf.PathName, cf.ErrorMessage };
+                    foreach (var r in query)
                     {
-                        var bf = new BackupFailure { ErrorMessage = cf.ErrorMessage };
-                        var sf = sourceFiles.SingleOrDefault((sf) => sf.SourceFileId == cf.SourceFileId);
-                        if (sf != null)
-                        {
-                            bf.SourceFilePath = sf.PathName;
-                        }
-                        ret.Add(bf);
+                        ret.Add(new BackupFailure { SourceFilePath = r.PathName, ErrorMessage = r.ErrorMessage });
                     }
                 }
             }
@@ -290,12 +290,15 @@ namespace Backup.Core
             int current = 0;
             foreach (var dd in col.DestinationDirectories)
             {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
                 if (!Directory.Exists(dd.PathName))
                 {
                     current += col.SourceFiles.Count;
                     double percent = total > 0 ? current * 100.0 / total : 0.0;
                     progress?.Report(percent);
-                    cancellationToken.ThrowIfCancellationRequested();
                     continue;
                 }
                 dbContext.Entry(dd)
@@ -318,7 +321,10 @@ namespace Backup.Core
                 var usedSourceFileIds = new HashSet<long>();
                 foreach (var sf in col.SourceFiles)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
                     if (File.Exists(sf.PathName))
                     {
                         BackupToDestinationDirectory(sf, baseDir, dd, dateFolder, cancellationToken);
@@ -327,6 +333,10 @@ namespace Backup.Core
                     current++;
                     double percent = total > 0 ? current * 100.0 / total : 0.0;
                     progress?.Report(percent);
+                }
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
                 }
                 MoveDestinationFilesToHistoryDirectory(dbContext, dd, dateFolder, usedSourceFileIds);
                 dd.Finished = DateTime.UtcNow;
@@ -422,28 +432,31 @@ namespace Backup.Core
             {
                 MoveToHistoryFile(rootDirectory, dateFolder, destinationFileName);
             }
-            try
-            {
-                CopyFileAsync(sourceFileName, destinationFileName, cancellationToken).Wait();
-                cancellationToken.ThrowIfCancellationRequested();
-            }
-            catch (Exception)
-            {
-                // cleanup if copy has been cancelled
-                if (File.Exists(destinationFileName))
-                {
-                    File.Delete(destinationFileName);
-                }
-                throw;
-            }
+            CopyFileAsync(sourceFileName, destinationFileName, cancellationToken).Wait();
             return destinationFileName;
         }
 
         private static async Task CopyFileAsync(string sourcePath, string destinationPath, CancellationToken cancellationToken)
         {
-            using Stream source = File.Open(sourcePath, FileMode.Open, FileAccess.Read);
-            using Stream destination = File.Create(destinationPath);
-            await source.CopyToAsync(destination, cancellationToken);
+            bool fileCreated = false;
+            try
+            {
+                using Stream source = File.Open(sourcePath, FileMode.Open, FileAccess.Read);
+                using Stream destination = File.Create(destinationPath);
+                fileCreated = true;
+                await source.CopyToAsync(destination, cancellationToken);
+            }
+            catch (Exception)
+            {
+                if (fileCreated)
+                {
+                    File.Delete(destinationPath);
+                }
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    throw;
+                }
+            }
         }
 
         private static void DeleteEmptyDirectories(string dir)
@@ -506,25 +519,24 @@ namespace Backup.Core
                 {
                     string destPathName = CopyToDestinationFile(
                         dd.PathName, baseDir, dateFolder, sf.PathName, cancellationToken);
-                    if (createnew)
+                    if (!cancellationToken.IsCancellationRequested)
                     {
-                        df = new DestinationFile
+                        if (createnew)
                         {
-                            SourceFileId = sf.SourceFileId,
-                        };
-                        dd.DestinationFiles.Add(df);
+                            df = new DestinationFile
+                            {
+                                SourceFileId = sf.SourceFileId,
+                            };
+                            dd.DestinationFiles.Add(df);
+                        }
+                        df.PathName = destPathName;
+                        df.ContentHash = sf.ContentHash;
+                        dd.Copied += 1;
                     }
-                    df.PathName = destPathName;
-                    df.ContentHash = sf.ContentHash;
-                    dd.Copied += 1;
                 }
             }
             catch (Exception ex)
             {
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    throw;
-                }
                 dd.CopyFailures.Add(new CopyFailure
                 {
                     SourceFileId = sf.SourceFileId,
