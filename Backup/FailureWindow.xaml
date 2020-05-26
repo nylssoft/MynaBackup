@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded" Closed="Window_Closed"
         Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
-        Icon="Images/logo.png"
+        Icon="Images/media-optical-copy-2.png"
         MinWidth="300" MinHeight="300"
         Height="500" Width="1000">
     <Grid Margin="5,5,5,5">

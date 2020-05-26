@@ -80,18 +80,11 @@ namespace Backup.Core
             var col = dbContext.BackupCollections.SingleOrDefault(col => col.Title == title);
             if (col != null)
             {
-                dbContext.Entry(col)
-                    .Collection(col => col.SourceFiles)
-                    .Load();
                 var dd = dbContext.DestinationDirectories.SingleOrDefault(dd => dd.BackupCollectionId == col.BackupCollectionId && dd.PathName == destinationDirectory);
                 if (dd != null)
                 {
-                    dbContext.Entry(dd)
-                        .Collection(dd => dd.CopyFailures)
-                        .Load();
-                    var query = from sf in col.SourceFiles
-                                join cf in dd.CopyFailures
-                                    on sf.SourceFileId equals cf.SourceFileId
+                    var query = from cf in dbContext.Set<CopyFailure>().Where(c => c.DestinationDirectoryId == dd.DestinationDirectoryId)
+                                from sf in dbContext.Set<SourceFile>().Where(s => s.BackupCollectionId == col.BackupCollectionId && s.SourceFileId == cf.SourceFileId)
                                 select new { sf.PathName, cf.ErrorMessage };
                     foreach (var r in query)
                     {
@@ -294,13 +287,6 @@ namespace Backup.Core
                 {
                     break;
                 }
-                if (!Directory.Exists(dd.PathName))
-                {
-                    current += col.SourceFiles.Count;
-                    double percent = total > 0 ? current * 100.0 / total : 0.0;
-                    progress?.Report(percent);
-                    continue;
-                }
                 dbContext.Entry(dd)
                     .Collection(dd => dd.DestinationFiles)
                     .Load();
@@ -314,6 +300,19 @@ namespace Backup.Core
                 dd.Started = DateTime.UtcNow;
                 dd.Copied = 0;
                 dd.CopyFailures.Clear();
+                if (!Directory.Exists(dd.PathName) && col.SourceFiles.Count > 0)
+                {
+                    current += col.SourceFiles.Count;
+                    double percent = total > 0 ? current * 100.0 / total : 0.0;
+                    progress?.Report(percent);
+                    dd.CopyFailures.Add(new CopyFailure
+                    {
+                        SourceFileId = col.SourceFiles[0].SourceFileId,
+                        ErrorMessage = $"Destination directory '{dd.PathName}' does not exist or cannot be accessed."
+                    });
+                    dd.Finished = DateTime.UtcNow;
+                    continue;
+                }
                 var baseDir = GetBaseDirectory(col.SourceFiles);
                 if (!string.IsNullOrEmpty(baseDir) &&
                     !string.IsNullOrEmpty(col.BaseDirectory) &&

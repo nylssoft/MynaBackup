@@ -26,5 +26,7 @@ namespace Backup.Core.Impl
         public string PathName { get; set; }
 
         public string ContentHash { get; set; }
+
+        public long DestinationDirectoryId { get; set; }
     }
 }

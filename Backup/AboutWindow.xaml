@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-        Height="320" Width="400" MinHeight="320" MinWidth="400" Icon="Images/logo.png">
+        Height="320" Width="400" MinHeight="320" MinWidth="400"
+        Icon="Images/media-optical-copy-2.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="128" />
@@ -18,7 +19,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" Grid.Column="0" Source="Images/128x128/adium.png" Width="128" Height="128" />
+        <Image Grid.Row="0" Grid.Column="0" Source="Images/128x128/media-optical-copy-2.png" Width="128" Height="128" />
         <Rectangle Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Stretch" Width="1" Margin="5" Stroke="Black"/>
         <TextBlock Grid.Row="0" Grid.Column="2" Text="{x:Static props:Resources.TEXT_COPYRIGHT}" Margin="5" TextWrapping="Wrap"/>
         <Button Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" IsCancel="True" IsDefault="True" Content="{x:Static props:Resources.CMD_CLOSE}" Height="23" Width="80" Margin="5,0,5,0" Click="ButtonCancel_Click" HorizontalAlignment="Right"/>

@@ -45,7 +45,7 @@
       <ComponentRef Id="BackupShortcut" />
     </Feature>
 
-    <Icon Id="Icon.exe" SourceFile="$(var.Backup.ProjectDir)\Images\icon.ico"/>
+    <Icon Id="Icon.exe" SourceFile="$(var.Backup.ProjectDir)\Images\media-optical-copy-2.ico"/>
 
     <Property Id="ARPPRODUCTICON" Value="Icon.exe" />
     

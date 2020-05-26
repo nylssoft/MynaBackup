@@ -240,11 +240,11 @@ namespace Backup
                 nextBackupMapping[name] = next;
                 if (next.HasValue)
                 {
-                    labelBackupNextStart.Content = next.Value.ToString();
+                    textBlockBackupNextStart.Text = next.Value.ToString();
                 }
                 else
                 {
-                    labelBackupNextStart.Content = "-";
+                    textBlockBackupNextStart.Text = "-";
                 }
                 UpdateOverview(name, model.Finished, next);
             }
@@ -571,7 +571,7 @@ namespace Backup
                 Properties.Settings.Default.LastUsedBackup = Math.Min(Properties.Settings.Default.LastUsedBackup, comboBox.Items.Count - 1);
                 comboBox.SelectedIndex = Properties.Settings.Default.LastUsedBackup;
             }
-            labelBackupNextStart.Content = "-";
+            textBlockBackupNextStart.Text = "-";
             var timer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 1)
@@ -680,9 +680,9 @@ namespace Backup
                 SetProgress(Properties.Resources.TEXT_LOAD_BACKUP_COLLECTION);
                 sourceFiles.Clear();
                 destDirectories.Clear();
-                labelBackupStarted.Content = "-";
-                labelBackupFinished.Content = "-";
-                labelBackupNextStart.Content = "-";
+                textBlockBackupStarted.Text = "-";
+                textBlockBackupFinished.Text = "-";
+                textBlockBackupNextStart.Text = "-";
                 textBoxExcludePattern.Text = "";
                 textBoxIncludePattern.Text = "";
                 textBlockSourceDirectory.Text = "";
@@ -697,15 +697,15 @@ namespace Backup
                     }
                     if (model.Started != null)
                     {
-                        labelBackupStarted.Content = model.Started.Value.ToString();
+                        textBlockBackupStarted.Text = model.Started.Value.ToString();
                     }
                     if (model.Finished != null)
                     {
-                        labelBackupFinished.Content = model.Finished.Value.ToString();
+                        textBlockBackupFinished.Text = model.Finished.Value.ToString();
                     }
                     if (nextBackupMapping[name].HasValue)
                     {
-                        labelBackupNextStart.Content = nextBackupMapping[name].ToString();
+                        textBlockBackupNextStart.Text = nextBackupMapping[name].ToString();
                     }
                     if (model.AutomaticBackup == 0)
                     {

@@ -24,5 +24,7 @@ namespace Backup.Core.Impl
         public long SourceFileId { get; set; }
 
         public string ErrorMessage { get; set; }
+
+        public long DestinationDirectoryId { get; set; }
     }
 }

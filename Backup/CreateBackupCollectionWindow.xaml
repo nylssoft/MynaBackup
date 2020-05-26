@@ -6,7 +6,8 @@
         xmlns:props="clr-namespace:Backup.Properties"
         mc:Ignorable="d"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-        Height="150" Width="300" ResizeMode="NoResize">
+        Height="150" Width="300" ResizeMode="NoResize"
+        Icon="Images/media-optical-copy-2.png">
     <Grid Margin="5,5,5,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>

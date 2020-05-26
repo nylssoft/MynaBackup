@@ -9,7 +9,7 @@
         Loaded="Window_Loaded" Closing="Window_Closing"
         Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
         Title="Myna Backup"
-        Icon="Images/logo.png"
+        Icon="Images/media-optical-copy-2.png"
         Height="600" Width="1024" MinWidth="200" MinHeight="300">
     <Window.Resources>
         <local:TimeValueConverter x:Key="TimeValueConverter" />
@@ -164,12 +164,12 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="{x:Static props:Resources.LABEL_STARTED_AT}" />
-                    <Label x:Name="labelBackupStarted" Grid.Column="1" />
-                    <Label Grid.Column="2" Content="{x:Static props:Resources.LABEL_FINISHED_AT}" />
-                    <Label x:Name="labelBackupFinished" Grid.Column="3" />
-                    <Label Grid.Column="4" Content="{x:Static props:Resources.LABEL_NEXT_BACKUP_AT}" />
-                    <Label x:Name="labelBackupNextStart" Grid.Column="5" />
+                    <TextBlock Grid.Column="0" Text="{x:Static props:Resources.LABEL_STARTED_AT}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                    <TextBlock x:Name="textBlockBackupStarted" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                    <TextBlock Grid.Column="2" Text="{x:Static props:Resources.LABEL_FINISHED_AT}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                    <TextBlock x:Name="textBlockBackupFinished" Grid.Column="3" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                    <TextBlock Grid.Column="4" Text="{x:Static props:Resources.LABEL_NEXT_BACKUP_AT}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                    <TextBlock x:Name="textBlockBackupNextStart" Grid.Column="5" VerticalAlignment="Center" Margin="5,0,5,0"/>
                 </Grid>
                 <Label Grid.Row="1" Grid.Column="0" Content="{x:Static props:Resources.LABEL_AUTOMATIC_BACKUP}" />
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">

@@ -10,13 +10,13 @@
     <Company>NylsSoft</Company>
     <Product>Myna Backup</Product>
     <Copyright>2020 Niels Stockfleth</Copyright>
-    <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.0.6</Version>
-    <AssemblyVersion>1.0.6.0</AssemblyVersion>
+    <ApplicationIcon>Images\media-optical-copy-2.ico</ApplicationIcon>
+    <Version>1.0.7</Version>
+    <AssemblyVersion>1.0.7.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\128x128\adium.png" />
+    <None Remove="Images\128x128\media-optical-copy-2.png" />
     <None Remove="Images\16x16\application-exit-5.png" />
     <None Remove="Images\16x16\document-new-6.png" />
     <None Remove="Images\16x16\document-properties.png" />
@@ -32,7 +32,7 @@
     <None Remove="Images\32x32\media-optical-copy-2.png" />
     <None Remove="Images\32x32\network-connect-2.png" />
     <None Remove="Images\32x32\network-disconnect-2.png" />
-    <None Remove="Images\logo.png" />
+    <None Remove="Images\media-optical-copy-2.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\128x128\adium.png" />
+    <Resource Include="Images\128x128\media-optical-copy-2.png" />
     <Resource Include="Images\16x16\application-exit-5.png" />
     <Resource Include="Images\16x16\document-new-6.png" />
     <Resource Include="Images\16x16\document-properties.png" />
@@ -60,7 +60,7 @@
     <Resource Include="Images\32x32\media-optical-copy-2.png" />
     <Resource Include="Images\32x32\network-connect-2.png" />
     <Resource Include="Images\32x32\network-disconnect-2.png" />
-    <Resource Include="Images\logo.png" />
+    <Resource Include="Images\media-optical-copy-2.png" />
   </ItemGroup>
 
   <ItemGroup>
