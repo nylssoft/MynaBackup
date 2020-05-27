@@ -28,6 +28,8 @@ namespace Backup
     {
         private readonly SortDecorator sortDecorator = new SortDecorator(ListSortDirection.Ascending);
 
+        public Action<string> BackupSelectionChanged { get; set; } = null;
+
         public bool IsClosed { get; set; } = false;
 
         public OverviewWindow(Window owner, string title, ObservableCollection<OverviewModel> overviews)
@@ -62,6 +64,20 @@ namespace Backup
             var viewlist = (CollectionView)CollectionViewSource.GetDefaultView(listViewOverviews.ItemsSource);
             viewlist.SortDescriptions.Clear();
             viewlist.SortDescriptions.Add(new SortDescription(sortBy, sortDecorator.Direction));
+        }
+
+        private void ListViewOverviews_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var mousePosition = e.GetPosition(listViewOverviews);
+            var lvitem = listViewOverviews.GetItemAt(mousePosition);
+            if (lvitem != null)
+            {
+                var overviewModel = lvitem.Content as OverviewModel;
+                if (overviewModel != null)
+                {
+                    BackupSelectionChanged?.Invoke(overviewModel.Name);
+                }
+            }
         }
     }
 }

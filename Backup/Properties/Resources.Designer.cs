@@ -650,38 +650,38 @@ namespace Backup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} destination file..
+        ///   Looks up a localized string similar to {0} destination directories..
         /// </summary>
-        public static string TEXT_DESTINATION_FILE_0 {
+        public static string TEXT_DESTINATION_DIRECTORIES_0 {
             get {
-                return ResourceManager.GetString("TEXT_DESTINATION_FILE_0", resourceCulture);
+                return ResourceManager.GetString("TEXT_DESTINATION_DIRECTORIES_0", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} destination file of {1} selected..
+        ///   Looks up a localized string similar to {0} destination directories of {1} selected..
         /// </summary>
-        public static string TEXT_DESTINATION_FILE_SELECTED_0_1 {
+        public static string TEXT_DESTINATION_DIRECTORIES_SELECTED_0_1 {
             get {
-                return ResourceManager.GetString("TEXT_DESTINATION_FILE_SELECTED_0_1", resourceCulture);
+                return ResourceManager.GetString("TEXT_DESTINATION_DIRECTORIES_SELECTED_0_1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} destination files..
+        ///   Looks up a localized string similar to {0} destination directory..
         /// </summary>
-        public static string TEXT_DESTINATION_FILES_0 {
+        public static string TEXT_DESTINATION_DIRECTORY_0 {
             get {
-                return ResourceManager.GetString("TEXT_DESTINATION_FILES_0", resourceCulture);
+                return ResourceManager.GetString("TEXT_DESTINATION_DIRECTORY_0", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} destination file of {1} selected..
+        ///   Looks up a localized string similar to {0} destination directory of {1} selected..
         /// </summary>
-        public static string TEXT_DESTINATION_FILES_SELECTED_0_1 {
+        public static string TEXT_DESTINATION_DIRECTORY_SELECTED_0_1 {
             get {
-                return ResourceManager.GetString("TEXT_DESTINATION_FILES_SELECTED_0_1", resourceCulture);
+                return ResourceManager.GetString("TEXT_DESTINATION_DIRECTORY_SELECTED_0_1", resourceCulture);
             }
         }
         
@@ -718,6 +718,15 @@ namespace Backup.Properties {
         public static string TEXT_LOADING_COPY_ERRORS {
             get {
                 return ResourceManager.GetString("TEXT_LOADING_COPY_ERRORS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading overview....
+        /// </summary>
+        public static string TEXT_LOADING_OVERVIEW {
+            get {
+                return ResourceManager.GetString("TEXT_LOADING_OVERVIEW", resourceCulture);
             }
         }
         

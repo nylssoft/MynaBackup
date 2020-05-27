@@ -25,6 +25,8 @@ namespace Backup
         private string name;
         private DateTime? lastRun;
         private DateTime? nextRun;
+        private int copied;
+        private int failed;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -66,5 +68,32 @@ namespace Backup
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NextRun"));
             }
         }
+
+        public int Copied
+        { 
+            get
+            {
+                return copied;
+            }
+            set
+            {
+                copied = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Copied"));
+            }
+        }
+
+        public int Failed
+        {
+            get
+            {
+                return failed;
+            }
+            set
+            {
+                failed = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Failed"));
+            }
+        }
+
     }
 }

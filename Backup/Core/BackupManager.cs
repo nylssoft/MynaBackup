@@ -116,6 +116,8 @@ namespace Backup.Core
                 model.SourceFiles.Add(sf.PathName);
             }
             var destDirs = dbContext.DestinationDirectories.Where(dd => dd.BackupCollectionId == model.Id);
+            model.Copied = 0;
+            model.Failed = 0;
             foreach (var dd in destDirs)
             {
                 model.DestinationDirectories.Add(dd.PathName);
@@ -123,11 +125,12 @@ namespace Backup.Core
                 status.Started = dd.Started;
                 status.Finished = dd.Finished;
                 status.Copied = dd.Copied;
-                dbContext.Entry(dd)
-                    .Collection(dd => dd.CopyFailures)
-                    .Load();
-                status.Failed = dd.CopyFailures.Count;
+                status.Failed = dbContext.CopyFailures
+                    .Where(cf => cf.DestinationDirectoryId == dd.DestinationDirectoryId)
+                    .Count();
                 model.Status[dd.PathName] = status;
+                model.Copied += status.Copied;
+                model.Failed += status.Failed;
             }
             return model;
         }
@@ -144,11 +147,20 @@ namespace Backup.Core
 
         public static DateTime? Update(BackupModel model)
         {
+            bool changed = false;
             DateTime? nextBackup = null;
             using var dbContext = new BackupDbContext(dbOptions);
             var col = dbContext.BackupCollections
                 .SingleOrDefault(col => col.BackupCollectionId == model.Id);
             if (col == null) throw new ArgumentException($"Backup collection with ID {model.Id} not found.");
+            if (col.Title != model.Title ||
+                col.AutomaticBackup != model.AutomaticBackup ||
+                col.SourceDirectory != model.SourceDirectory ||
+                col.IncludePattern != model.IncludePattern ||
+                col.ExcludePattern != model.ExcludePattern)
+            {
+                changed = true;
+            }
             col.Title = model.Title;
             col.AutomaticBackup = model.AutomaticBackup;
             col.SourceDirectory = model.SourceDirectory;
@@ -177,6 +189,7 @@ namespace Backup.Core
             {
                 if (delDirectories.Contains(dd.PathName))
                 {
+                    changed = true;
                     dbContext.Entry(dd)
                         .Collection(dd => dd.CopyFailures)
                         .Load();
@@ -201,10 +214,12 @@ namespace Backup.Core
             {
                 if (delSourceFiles.Contains(sf.PathName))
                 {
+                    changed = true;
                     dbContext.SourceFiles.Remove(sf);
                 }
             }
             var addDirectories = model.DestinationDirectories.Except(existingDestinationDirectores).ToList();
+            changed |= addDirectories.Any();
             foreach (var dname in addDirectories)
             {
                 col.DestinationDirectories.Add(new DestinationDirectory { PathName = dname });
@@ -212,6 +227,7 @@ namespace Backup.Core
             var addSourceFiles = model.SourceFiles
                 .Except(existingSourceFiles)
                 .ToList();
+            changed |= addSourceFiles.Any();
             foreach (var fname in addSourceFiles)
             {
                 col.SourceFiles.Add(new SourceFile { PathName = fname });
@@ -220,7 +236,10 @@ namespace Backup.Core
             {
                 nextBackup = col.Started.Value.AddMinutes(col.AutomaticBackup).ToLocalTime();
             }
-            dbContext.SaveChanges();
+            if (changed)
+            {
+                dbContext.SaveChanges();
+            }
             return nextBackup;
         }
 
@@ -261,16 +280,16 @@ namespace Backup.Core
             dbContext.SaveChanges();
         }
 
-        public static DateTime? Backup(string title, IProgress<double> progress, CancellationToken cancellationToken)
+        public static DateTime? Backup(BackupModel model, IProgress<double> progress, CancellationToken cancellationToken)
         {
             progress?.Report(0.0);
             DateTime? nextBackup = null;
             using var dbContext = new BackupDbContext(dbOptions);
             string dateFolder = DateTime.Now.ToString(DATE_FOLDER_FOMRAT);
-            var col = dbContext.BackupCollections.SingleOrDefault(col => col.Title == title);
+            var col = dbContext.BackupCollections.SingleOrDefault(col => col.Title == model.Title);
             if (col == null)
             {
-                throw new ArgumentException($"Backup collection '{title}' not found.");
+                throw new ArgumentException($"Backup collection '{model.Title}' not found.");
             }
             col.Started = DateTime.UtcNow;
             dbContext.Entry(col)
@@ -351,6 +370,13 @@ namespace Backup.Core
             }
             dbContext.SaveChanges();
             progress?.Report(100.0);
+            model.Copied = 0;
+            model.Failed = 0;
+            foreach (var dd in col.DestinationDirectories)
+            {
+                model.Copied += dd.Copied;
+                model.Failed += dd.CopyFailures.Count;
+            }
             return nextBackup;
         }
 

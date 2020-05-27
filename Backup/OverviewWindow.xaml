@@ -9,12 +9,12 @@
         Loaded="Window_Loaded" Closed="Window_Closed"
         Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
         Icon="Images/media-optical-copy-2.png"
-        Height="300" Width="500">
+        Height="300" Width="700">
     <Window.Resources>
         <local:TimeValueConverter x:Key="TimeValueConverter" />
     </Window.Resources>
     <Grid Margin="5,5,5,5">
-        <ListView Name="listViewOverviews">
+        <ListView Name="listViewOverviews" MouseDoubleClick="ListViewOverviews_MouseDoubleClick">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -37,6 +37,16 @@
                                 <TextBlock Text="{Binding LastRun, Converter={StaticResource TimeValueConverter}}" TextAlignment="Left" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Copied}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Copied" Content="{x:Static props:Resources.COLUMN_COPIED_FILES}" Click="ListViewBackups_ColumnHeaderClick"/>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Failed}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Failed" Content="{x:Static props:Resources.COLUMN_COPY_ERRORS}" Click="ListViewBackups_ColumnHeaderClick"/>
+                        </GridViewColumn.Header>
                     </GridViewColumn>
                     <GridViewColumn Width="150">
                         <GridViewColumn.Header>

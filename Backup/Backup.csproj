@@ -11,8 +11,8 @@
     <Product>Myna Backup</Product>
     <Copyright>2020 Niels Stockfleth</Copyright>
     <ApplicationIcon>Images\media-optical-copy-2.ico</ApplicationIcon>
-    <Version>1.0.7</Version>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <Version>1.0.8</Version>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

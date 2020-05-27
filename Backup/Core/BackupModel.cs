@@ -43,5 +43,9 @@ namespace Backup.Core
         public string ExcludePattern { get; set; } = "";
 
         public int AutomaticBackup { get; set; } = 0;
+
+        public int Copied { get; set; } = 0;
+
+        public int Failed { get; set; } = 0;
     }
 }

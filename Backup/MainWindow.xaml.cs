@@ -93,9 +93,9 @@ namespace Backup
                         var model = await Task.Run(() => BackupManager.Get(collectionName));
                         await UpdateSourceFilesFromSourceDirectory(model);
                         var progress = new Progress<double>((percent) => UpdateProgress(percent));
-                        next = await Task.Run(() => BackupManager.Backup(collectionName, progress, cts.Token));
+                        next = await Task.Run(() => BackupManager.Backup(model, progress, cts.Token));
                         nextBackupMapping[collectionName] = next;
-                        UpdateOverview(collectionName, DateTime.Now, next);
+                        UpdateOverview(collectionName, DateTime.Now, next, model);
                         if (collectionName == comboBox.SelectedItem as string)
                         {
                             await InitBackupCollection(collectionName);
@@ -645,24 +645,24 @@ namespace Backup
             }
             if (listViewDirectories.SelectedItems.Count == 1)
             {
-                labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_FILE_SELECTED_0_1,
+                labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_DIRECTORY_SELECTED_0_1,
                     listViewDirectories.SelectedItems.Count, destDirectories.Count);
             }
             else if (listViewDirectories.SelectedItems.Count > 1)
             {
-                labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_FILES_SELECTED_0_1,
+                labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_DIRECTORIES_SELECTED_0_1,
                     listViewDirectories.SelectedItems.Count, destDirectories.Count);
             }
             else
             {
                 if (destDirectories.Count == 1)
                 {
-                    labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_FILE_0,
+                    labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_DIRECTORY_0,
                         destDirectories.Count);
                 }
                 else
                 {
-                    labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_FILES_0,
+                    labelDirectoriesInfo.Content = string.Format(Properties.Resources.TEXT_DESTINATION_DIRECTORIES_0,
                         destDirectories.Count);
                 }
             }
@@ -754,7 +754,7 @@ namespace Backup
                         };
                         destDirectories.Add(ddmodel);
                     }
-                    UpdateOverview(name, model.Finished, nextBackupMapping[name]);
+                    UpdateOverview(name, model.Finished, nextBackupMapping[name], model);
                 }
             }
             catch (Exception ex)
@@ -769,7 +769,7 @@ namespace Backup
             UpdateControls();
         }
 
-        private void UpdateOverview(string collectionName, DateTime? lastRun, DateTime? nextRun, bool remove = false)
+        private void UpdateOverview(string collectionName, DateTime? lastRun, DateTime? nextRun, BackupModel model = null, bool remove = false)
         {
             bool found = false;
             foreach (var overview in overviews)
@@ -779,6 +779,11 @@ namespace Backup
                     found = true;
                     overview.LastRun = lastRun;
                     overview.NextRun = nextRun;
+                    if (model != null)
+                    {
+                        overview.Copied = model.Copied;
+                        overview.Failed = model.Failed;
+                    }
                     if (remove)
                     {
                         overviews.Remove(overview);
@@ -959,6 +964,14 @@ namespace Backup
             }
         }
 
+        private void ChangeBackupSelection(string collectionName)
+        {
+            if (!IsTaskRunning)
+            {
+                comboBox.SelectedItem = collectionName;
+            }
+        }
+
         // --- commands
 
         private void ChangeSettingsCmd()
@@ -1013,7 +1026,7 @@ namespace Backup
                     nextBackupMapping[model.Title] = next;
                     comboBox.Items[comboBox.SelectedIndex] = model.Title;
                     comboBox.SelectedItem = model.Title;
-                    UpdateOverview(oldname, null, null, true);
+                    UpdateOverview(oldname, null, null, null, true);
                     UpdateOverview(model.Title, model.Finished, next);
                 }
             }
@@ -1046,7 +1059,7 @@ namespace Backup
                         comboBox.SelectedIndex = Math.Min(idx, comboBox.Items.Count - 1);
                     }
                     nextBackupMapping.Remove(name);
-                    UpdateOverview(name, null, null, true);
+                    UpdateOverview(name, null, null, null, true);
                 }
                 catch (Exception ex)
                 {
@@ -1086,15 +1099,16 @@ namespace Backup
                 string name = comboBox.SelectedItem as string;
                 if (name != null)
                 {
+                    SetProgress(Properties.Resources.TEXT_LOAD_BACKUP_COLLECTION);
+                    var model = await Task.Run(() => BackupManager.Get(name));
                     if (textBlockSourceDirectory.Text.Length > 0)
                     {
                         SetProgress(Properties.Resources.TEXT_UPDATE_SOURCE_FILES_FROM_DIRECTORY);
-                        var model = await Task.Run(() => BackupManager.Get(name));
                         await UpdateSourceFilesFromSourceDirectory(model);
                     }
                     SetProgress(Properties.Resources.TEXT_RUN_BACKUP_COLLECTION);
                     var progress = new Progress<double>((percent) => UpdateProgress(percent));
-                    var next = await Task.Run( () => BackupManager.Backup(name, progress, cts.Token));
+                    var next = await Task.Run( () => BackupManager.Backup(model, progress, cts.Token));
                     nextBackupMapping[name] = next;
                     await InitBackupCollection(name);
                 }
@@ -1332,15 +1346,18 @@ namespace Backup
                 if (overviewWindow == null || overviewWindow.IsClosed)
                 {
                     IsTaskRunning = true;
-                    SetProgress(Properties.Resources.TEXT_LOAD_BACKUP_COLLECTION);
+                    SetProgress(Properties.Resources.TEXT_LOADING_OVERVIEW);
                     UpdateControls();
                     overviews.Clear();
                     var collectionNames = BackupManager.GetAll();
                     foreach (var collectionName in collectionNames)
                     {
                         var backupModel = await Task.Run(() => BackupManager.Get(collectionName));
-                        var dt = backupModel.Finished;
-                        var m = new OverviewModel { Name = collectionName, LastRun = dt };
+                        var m = new OverviewModel {
+                            Name = collectionName,
+                            LastRun = backupModel.Finished,
+                            Copied = backupModel.Copied,
+                            Failed = backupModel.Failed };
                         var next = nextBackupMapping[collectionName];
                         if (next.HasValue)
                         {
@@ -1349,6 +1366,7 @@ namespace Backup
                         overviews.Add(m);
                     }
                     overviewWindow = new OverviewWindow(null, Properties.Resources.TITLE_OVERVIEW, overviews);
+                    overviewWindow.BackupSelectionChanged = ChangeBackupSelection;
                     overviewWindow.Show();
                 }
             }
