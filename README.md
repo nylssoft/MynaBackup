@@ -50,8 +50,8 @@ context menus, toolbar buttons or edit menu items.
 The collection of source files will be filtered if an include and/or exclude pattern is specified.
 For the pattern syntax, see https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference .
 For example, to include only files with suffix jpg or png (pattern is case insensitve), you can use
-the include pattern ".*\\.(jpg|png)$".
-To exclude e.g. a directory path with the name "log", you can use the exclude pattern ".*\\log\\.*".
+the include pattern ".\*\\.(jpg|png)$".
+To exclude e.g. a directory path with the name "log", you can use the exclude pattern ".\*\\\\log\\\\.\*".
 
 ### Cancel a Backup
 
