@@ -8,10 +8,10 @@ An application to backup files for Windows using WPF with .NET Core and Entity F
 
 ## Installation
 
-The latest MSI file can be found here: https://github.com/nylssoft/MynaBasckup/releases/download/V1.0.8/MynaBackup.msi
+The latest MSI file can be found here: https://github.com/nylssoft/MynaBackup/releases/download/v1.0.8/MynaBackup.msi.
 
 The program requires .NET Core 3.1 Desktop Runtime (v3.1.4) for x86,
-see https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-desktop-3.1.4-windows-x86-installer
+see https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-desktop-3.1.4-windows-x86-installer.
 
 ## Features
 
@@ -48,7 +48,7 @@ context menus, toolbar buttons or edit menu items.
 ### Include and Exclude patterns
 
 The collection of source files will be filtered if an include and/or exclude pattern is specified.
-For the pattern syntax, see https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference .
+For the pattern syntax, see https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference.
 For example, to include only files with suffix jpg or png (pattern is case insensitve), you can use
 the include pattern ".\*\\.(jpg|png)$".
 To exclude e.g. a directory path with the name "log", you can use the exclude pattern ".\*\\\\log\\\\.\*".
