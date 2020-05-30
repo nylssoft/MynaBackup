@@ -114,9 +114,9 @@ The following icons are used from the Open Icon Library (https://sourceforge.net
 application-exit-5.png / nuovext2 / LGPL-2.1<br>
 document-new-6.ico / oxygen / CC-BY-SA 3.0 or LGPL<br>
 document-properties-2.png / gnome / GPLv2<br>
-folder-new-2.ico / echo / CC-BY-SA-3.0
+folder-new-2.ico / echo / CC-BY-SA-3.0<br>
 list-add-4.ico / oxygen / CC-BY-SA 3.0 or LGPL<br>
 list-remove-4.ico / oxygen / CC-BY-SA 3.0 or LGPL<br>
-media-optical-copy-2.ico / oxygen / CC-BY-SA 3.0 or LGPL
-network-connect-2.ico / nuvola / LGPL-2.1
-network-disconnect-2.ico / nuvola / LGPL-2.1
+media-optical-copy-2.ico / oxygen / CC-BY-SA 3.0 or LGPL<br>
+network-connect-2.ico / nuvola / LGPL-2.1<br>
+network-disconnect-2.ico / nuvola / LGPL-2.1<br>
