@@ -8,10 +8,9 @@ An application to backup files for Windows using WPF with .NET Core and Entity F
 
 ## Installation
 
-The latest MSI file can be found here: https://github.com/nylssoft/MynaBackup/releases/download/v1.0.8/MynaBackup.msi.
+The latest version can be downloaded from here: https://www.stockfleth.eu/view?page=downloads.
 
-The program requires .NET Core 3.1 Desktop Runtime (v3.1.4) for x86,
-see https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-desktop-3.1.4-windows-x86-installer.
+The program requires .NET 6. Download the ZIP file and extract the files. Run Backup.exe.
 
 ## Features
 
@@ -104,8 +103,7 @@ Double click on a destination directory to see the copy errors.
 
 ## Build
 
-- Build with VS 2019
-- WiX ToolSet is required to build a MSI, see https://wixtoolset.org/
+- Build with VS 2022
 
 ## Licenses
 
