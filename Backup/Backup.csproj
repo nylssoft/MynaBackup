@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
@@ -36,8 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -91,6 +91,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
 </Project>
