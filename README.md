@@ -8,9 +8,7 @@ An application to backup files for Windows using WPF with .NET Core and Entity F
 
 ## Installation
 
-The latest version can be downloaded from here: https://www.stockfleth.eu/view?page=downloads.
-
-The program requires .NET 6. Download the ZIP file and extract the files. Run Backup.exe.
+The program requires .NET 8.
 
 ## Features
 
