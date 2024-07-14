@@ -13,6 +13,7 @@
     <ApplicationIcon>Images\media-optical-copy-2.ico</ApplicationIcon>
     <Version>1.0.9</Version>
     <AssemblyVersion>1.0.9.0</AssemblyVersion>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
   <ItemGroup>
