@@ -1,5 +1,8 @@
 name: Release Myna Backup
-on: workflow_dispatch
+on:
+  push:
+   tags:
+      - "v*"
 jobs:
   build:
     runs-on: windows-latest
@@ -24,4 +27,4 @@ jobs:
     - name: Create release ZIP file
       run: Compress-Archive -Path bin/Release/net8.0-windows/publish/* -Destination Release.zip
     - name: Create github release
-      run: gh release create v2.0.0 Release.zip
+      run: gh release create "${{ github.ref_name }}" Release.zip
