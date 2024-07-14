@@ -5,7 +5,6 @@ jobs:
     runs-on: windows-latest
     env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref_name }}    
     defaults:
       run:
         working-directory: Backup
@@ -25,4 +24,4 @@ jobs:
     - name: Create release ZIP file
       run: Compress-Archive -Path bin/Release/net8.0-windows/publish/* -Destination Release.zip
     - name: Create github release
-      run: gh release create "$tag" Release.zip
+      run: gh release create v2.0.0 Release.zip
