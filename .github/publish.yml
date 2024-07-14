@@ -2,7 +2,7 @@ name: .NET Myna Backup
 on: workflow_dispatch
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     defaults:
       run:
         working-directory: Backup
