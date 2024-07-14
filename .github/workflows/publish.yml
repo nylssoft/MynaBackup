@@ -3,6 +3,9 @@ on: workflow_dispatch
 jobs:
   build:
     runs-on: windows-latest
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}    
     defaults:
       run:
         working-directory: Backup
@@ -22,7 +25,4 @@ jobs:
     - name: Create release ZIP file
       run: Compress-Archive -Path bin/Release/net8.0-windows/publish/* -Destination Release.zip
     - name: Create github release
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
       run: gh release create "$tag" Release.zip
