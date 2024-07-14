@@ -12,7 +12,6 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - run: dotnet publish
-    - run: zip -r MynaBackup.zip bin/Release/net8.0-windows/publish
     - uses: actions/upload-artifact@v4
       with:
-        path: MynaBackup.zip
+        path: Backup/bin/Release/net8.0-windows/publish
