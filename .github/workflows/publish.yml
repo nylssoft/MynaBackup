@@ -1,4 +1,4 @@
-name: .NET Myna Backup
+name: Publish Myna Backup
 on: workflow_dispatch
 jobs:
   build:
