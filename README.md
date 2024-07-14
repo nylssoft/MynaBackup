@@ -99,10 +99,6 @@ Double click on a destination directory to see the copy errors.
 
 ![Copy Errors Screenshot](Screenshots/mynabackup_copyerrors.png)
 
-## Build
-
-- Build with VS 2022
-
 ## Licenses
 
 The following icons are used from the Open Icon Library (https://sourceforge.net/projects/openiconlibrary):

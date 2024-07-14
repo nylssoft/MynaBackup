@@ -9,10 +9,10 @@
     <Authors>Niels Stockfleth</Authors>
     <Company>NylsSoft</Company>
     <Product>Myna Backup</Product>
-    <Copyright>2020-2022 Niels Stockfleth</Copyright>
+    <Copyright>2024 Niels Stockfleth</Copyright>
     <ApplicationIcon>Images\media-optical-copy-2.ico</ApplicationIcon>
-    <Version>1.0.9</Version>
-    <AssemblyVersion>1.0.9.0</AssemblyVersion>
+    <Version>2.1.0</Version>
+    <AssemblyVersion>2.1.0</AssemblyVersion>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
