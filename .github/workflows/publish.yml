@@ -7,16 +7,22 @@ jobs:
       run:
         working-directory: Backup
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-dotnet@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - run: dotnet publish
-    - uses: actions/upload-artifact@v4
+    - name: Publish
+      run: dotnet publish
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
       with:
         path: Backup/bin/Release/net8.0-windows/publish
-    - run: Compress-Archive -Path bin/Release/net8.0-windows/publish/* -Destination Release.zip
-    - env:
+    - name: Create release ZIP file
+      run: Compress-Archive -Path bin/Release/net8.0-windows/publish/* -Destination Release.zip
+    - name: Create github release
+      env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
-    - run: gh release create "$tag" Release.zip
+      run: gh release create "$tag" Release.zip
