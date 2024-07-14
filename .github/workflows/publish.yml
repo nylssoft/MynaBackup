@@ -1,4 +1,4 @@
-name: Publish Myna Backup
+name: Release Myna Backup
 on: workflow_dispatch
 jobs:
   build:
@@ -15,3 +15,8 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         path: Backup/bin/Release/net8.0-windows/publish
+    - run: Compress-Archive -Path bin/Release/net8.0-windows/publish/* -Destination Release.zip
+    - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+    - run: gh release create "$tag" Release.zip
