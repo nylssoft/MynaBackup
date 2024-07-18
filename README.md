@@ -2,7 +2,7 @@
 
 ## Overview
 
-An application to backup files for Windows using WPF with .NET Core and Entity Framework Core.
+An application to backup files for Windows using WPF.
 
 ![screenshot](Screenshots/mynabackup.png)
 
