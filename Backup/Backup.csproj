@@ -11,8 +11,9 @@
     <Product>Myna Backup</Product>
     <Copyright>2024 Niels Stockfleth</Copyright>
     <ApplicationIcon>Images\media-optical-copy-2.ico</ApplicationIcon>
-    <Version>2.1.1</Version>
-    <AssemblyVersion>2.1.1</AssemblyVersion>
+    <Version>8.0.1</Version>
+    <AssemblyName>MynaBackup</AssemblyName>
+    <AssemblyVersion>8.0.1</AssemblyVersion>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
