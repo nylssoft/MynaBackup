@@ -8,7 +8,7 @@ An application to backup files for Windows using WPF.
 
 ## Installation
 
-The program requires .NET 8.
+The program requires .NET 9.
 
 ## Features
 
